@@ -1,0 +1,86 @@
+/*
+ * Mapp Fashion — Design System
+ * Colours extracted from mapp.com/de/mapp-fashion/
+ */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Serif+Display&display=swap');
+
+:root {
+  /* ── Core palette ─────────────────────────────── */
+  --bg:            #EDE8E0;
+  --bg-card:       #FFFFFF;
+  --bg-warm:       #F0EAE0;
+  --navy:          #2D2A5E;
+  --navy-soft:     #3D3A70;
+  --violet:        #7B6FE8;
+  --violet-light:  #A89DF0;
+  --violet-pale:   #ECE8FD;
+  --pink:          #EC4899;
+  --pink-pale:     #FCE7F3;
+  --green:         #10B981;
+  --green-pale:    #D1FAE5;
+  --amber:         #F59E0B;
+  --amber-pale:    #FEF3C7;
+
+  /* ── Text ─────────────────────────────────────── */
+  --text-dark:     #1A1820;
+  --text-mid:      #4A4560;
+  --text-muted:    #8B87A0;
+  --text-on-dark:  #F5F2FF;
+
+  /* ── Borders & effects ────────────────────────── */
+  --border:        rgba(123,111,232,0.13);
+  --shadow:        0 2px 14px rgba(45,42,94,0.07);
+  --shadow-md:     0 6px 24px rgba(45,42,94,0.12);
+  --radius-sm:     8px;
+  --radius-md:     14px;
+  --radius-lg:     20px;
+
+  /* ── Segment colours ──────────────────────────── */
+  --seg-none:      #8B87A0;
+  --seg-once:      #7B6FE8;
+  --seg-loyal:     #10B981;
+  --seg-returner:  #F59E0B;
+
+  /* ── Typography ───────────────────────────────── */
+  --font-display:  'DM Serif Display', serif;
+  --font-body:     'DM Sans', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text-dark);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Diagonal stripe decoration — mirrors Mapp Fashion website */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0; right: -5%; width: 50%; height: 100vh;
+  background: repeating-linear-gradient(
+    -18deg,
+    transparent 0px, transparent 30px,
+    rgba(236,72,153,0.055) 30px, rgba(236,72,153,0.055) 44px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Sim badge — marks all simulated data in the UI ── */
+.sim-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 8px;
+  background: var(--amber-pale);
+  color: #92400E;
+  vertical-align: middle;
+  margin-left: 5px;
+}

@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mapp Fashion · Live Product Stream</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Serif+Display&display=swap');
+
+:root {
+  --bg:            #EDE8E0;
+  --bg-card:       #FFFFFF;
+  --navy:          #2D2A5E;
+  --violet:        #7B6FE8;
+  --violet-light:  #A89DF0;
+  --violet-pale:   #ECE8FD;
+  --pink:          #EC4899;
+  --pink-pale:     #FCE7F3;
+  --green:         #10B981;
+  --green-pale:    #D1FAE5;
+  --amber:         #F59E0B;
+  --amber-pale:    #FEF3C7;
+  --text-dark:     #1A1820;
+  --text-mid:      #4A4560;
+  --text-muted:    #8B87A0;
+  --text-on-dark:  #F5F2FF;
+  --border:        rgba(123,111,232,0.13);
+  --font-display:  'DM Serif Display', serif;
+  --font-body:     'DM Sans', sans-serif;
+  --seg-none:      #8B87A0;
+  --seg-once:      #7B6FE8;
+  --seg-loyal:     #10B981;
+  --seg-returner:  #F59E0B;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-body); background: var(--bg); color: var(--text-dark); min-height: 100vh; overflow-x: hidden; }
+
+body::after {
+  content: ''; position: fixed; top: 0; right: -5%; width: 50%; height: 100vh;
+  background: repeating-linear-gradient(-18deg, transparent 0px, transparent 30px, rgba(236,72,153,0.055) 30px, rgba(236,72,153,0.055) 44px);
+  pointer-events: none; z-index: 0;
+}
+
+/* ── HEADER ── */
+header {
+  background: var(--navy); padding: 0 36px; height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 20px rgba(45,42,94,0.3);
+}
+.logo { font-family: var(--font-display); color: var(--text-on-dark); font-size: 20px; display: flex; align-items: center; gap: 10px; }
+.logo-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--pink); }
+.hdr-right { display: flex; align-items: center; gap: 14px; }
+.live-pill { display: flex; align-items: center; gap: 7px; background: rgba(16,185,129,0.18); border: 1px solid rgba(16,185,129,0.32); color: #6EE7B7; font-size: 12px; font-weight: 600; padding: 5px 13px; border-radius: 20px; }
+.live-dot { width: 7px; height: 7px; border-radius: 50%; background: #10B981; animation: blink 1.4s infinite; }
+@keyframes blink { 0%,100%{opacity:1}50%{opacity:0.3} }
+.spd-wrap { display: flex; align-items: center; gap: 6px; }
+.spd-label { color: rgba(255,255,255,0.5); font-size: 11.5px; }
+.spd-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.7); font-family: var(--font-body); font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 6px; cursor: pointer; transition: all 0.18s; }
+.spd-btn:hover { background: rgba(255,255,255,0.2); color: white; }
+.spd-btn.active { background: var(--violet); border-color: var(--violet); color: white; }
+.pause-btn { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.22); color: white; font-family: var(--font-body); font-size: 12px; font-weight: 500; padding: 5px 14px; border-radius: 8px; cursor: pointer; transition: all 0.18s; }
+.pause-btn:hover { background: rgba(255,255,255,0.22); }
+
+main { max-width: 1400px; margin: 0 auto; padding: 26px 36px 60px; position: relative; z-index: 1; }
+
+/* ── GLOBAL KPI ROW ── */
+.global-kpis {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.gkpi {
+  background: var(--bg-card);
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  padding: 16px 18px;
+  box-shadow: 0 2px 12px rgba(45,42,94,0.06);
+  position: relative; overflow: hidden;
+}
+.gkpi::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; border-radius: 14px 14px 0 0; }
+.gkpi.revenue::before   { background: var(--green); }
+.gkpi.cart-val::before  { background: var(--pink); }
+.gkpi.orders::before    { background: var(--violet); }
+.gkpi.cart-sz::before   { background: var(--amber); }
+.gkpi.views::before     { background: var(--violet-light); }
+.gkpi.conv::before      { background: linear-gradient(90deg, var(--violet), var(--green)); }
+
+.gkpi-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 6px; }
+.gkpi-value { font-family: var(--font-display); font-size: 28px; line-height: 1; }
+.gkpi.revenue  .gkpi-value { color: var(--green); }
+.gkpi.cart-val .gkpi-value { color: var(--pink); }
+.gkpi.orders   .gkpi-value { color: var(--violet); }
+.gkpi.cart-sz  .gkpi-value { color: var(--amber); }
+.gkpi.views    .gkpi-value { color: var(--violet-light); }
+.gkpi.conv     .gkpi-value { color: var(--navy); }
+.gkpi-sub { font-size: 10px; color: var(--text-muted); margin-top: 4px; }
+.gkpi-rate { font-size: 10.5px; font-weight: 600; margin-top: 3px; }
+.gkpi.revenue  .gkpi-rate { color: var(--green); }
+.gkpi.cart-val .gkpi-rate { color: var(--pink); }
+
+/* ── SEGMENT CARDS ── */
+.seg-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 18px; }
+
+.seg-card {
+  background: var(--bg-card); border-radius: 16px; border: 2px solid rgba(123,111,232,0.09);
+  padding: 16px 18px 14px; box-shadow: 0 2px 14px rgba(45,42,94,0.07);
+  cursor: pointer; transition: all 0.22s; position: relative; overflow: hidden; user-select: none;
+}
+.seg-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; border-radius: 16px 16px 0 0; }
+.seg-card.none::before     { background: var(--seg-none); }
+.seg-card.once::before     { background: var(--seg-once); }
+.seg-card.loyal::before    { background: var(--seg-loyal); }
+.seg-card.returner::before { background: var(--seg-returner); }
+
+.seg-card:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(45,42,94,0.13); }
+.seg-card.active.none      { border-color: var(--seg-none);    background: rgba(139,135,160,0.05); }
+.seg-card.active.once      { border-color: var(--seg-once);    background: var(--violet-pale); }
+.seg-card.active.loyal     { border-color: var(--seg-loyal);   background: var(--green-pale); }
+.seg-card.active.returner  { border-color: var(--seg-returner);background: var(--amber-pale); }
+.seg-card.inactive         { opacity: 0.35; transform: none !important; filter: grayscale(0.3); }
+
+.seg-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 10px; }
+.seg-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 17px; }
+.seg-card.none     .seg-icon { background: rgba(139,135,160,0.14); }
+.seg-card.once     .seg-icon { background: var(--violet-pale); }
+.seg-card.loyal    .seg-icon { background: var(--green-pale); }
+.seg-card.returner .seg-icon { background: var(--amber-pale); }
+
+.seg-check { width: 20px; height: 20px; border-radius: 50%; border: 2px solid rgba(139,135,160,0.22); display: flex; align-items: center; justify-content: center; font-size: 10px; color: transparent; transition: all 0.2s; }
+.seg-card.active .seg-check { color: white; }
+.seg-card.active.none     .seg-check { background: var(--seg-none);    border-color: var(--seg-none); }
+.seg-card.active.once     .seg-check { background: var(--seg-once);    border-color: var(--seg-once); }
+.seg-card.active.loyal    .seg-check { background: var(--seg-loyal);   border-color: var(--seg-loyal); }
+.seg-card.active.returner .seg-check { background: var(--seg-returner);border-color: var(--seg-returner); }
+
+.seg-name { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 2px; }
+
+/* Visitors row */
+.seg-visitors { font-family: var(--font-display); font-size: 30px; line-height: 1; }
+.seg-card.none     .seg-visitors { color: var(--seg-none); }
+.seg-card.once     .seg-visitors { color: var(--seg-once); }
+.seg-card.loyal    .seg-visitors { color: var(--seg-loyal); }
+.seg-card.returner .seg-visitors { color: var(--seg-returner); }
+
+.seg-pct-row { display: flex; align-items: center; justify-content: space-between; margin-top: 2px; margin-bottom: 12px; }
+.seg-sub { font-size: 10.5px; color: var(--text-muted); }
+.seg-pct { font-size: 10.5px; font-weight: 700; padding: 2px 7px; border-radius: 10px; }
+.seg-card.none     .seg-pct { background: rgba(139,135,160,0.13); color: var(--seg-none); }
+.seg-card.once     .seg-pct { background: var(--violet-pale); color: var(--seg-once); }
+.seg-card.loyal    .seg-pct { background: var(--green-pale);  color: var(--seg-loyal); }
+.seg-card.returner .seg-pct { background: var(--amber-pale);  color: var(--seg-returner); }
+
+/* ── SEGMENT METRICS GRID (revenue/cart per segment) ── */
+.seg-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(123,111,232,0.1);
+}
+
+.sm-item { }
+.sm-label { font-size: 9px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; }
+.sm-value { font-size: 14px; font-weight: 600; color: var(--text-dark); }
+.sm-sub   { font-size: 9.5px; color: var(--text-muted); }
+
+.seg-card.none     .sm-value.hi { color: var(--seg-none); }
+.seg-card.once     .sm-value.hi { color: var(--seg-once); }
+.seg-card.loyal    .sm-value.hi { color: var(--seg-loyal); }
+.seg-card.returner .sm-value.hi { color: var(--seg-returner); }
+
+/* Sparkline */
+.seg-spark { display: flex; align-items: flex-end; gap: 2px; height: 16px; margin-top: 8px; }
+.spark-b { flex: 1; border-radius: 2px 2px 0 0; min-height: 2px; transition: height 0.4s; }
+.seg-card.none     .spark-b { background: var(--seg-none); opacity:0.45; }
+.seg-card.once     .spark-b { background: var(--seg-once); opacity:0.45; }
+.seg-card.loyal    .spark-b { background: var(--seg-loyal); opacity:0.45; }
+.seg-card.returner .spark-b { background: var(--seg-returner); opacity:0.45; }
+.seg-card.active   .spark-b { opacity: 1; }
+
+/* ── FILTER BAR ── */
+.filter-bar { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding: 9px 18px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border); }
+.filter-lbl { font-size: 11.5px; color: var(--text-muted); font-weight: 500; flex-shrink: 0; }
+.active-pills { display: flex; gap: 7px; flex-wrap: wrap; flex: 1; }
+.seg-pill { display: flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+.seg-pill.none     { background: rgba(139,135,160,0.13); color: var(--seg-none); }
+.seg-pill.once     { background: var(--violet-pale); color: var(--seg-once); }
+.seg-pill.loyal    { background: var(--green-pale);  color: var(--seg-loyal); }
+.seg-pill.returner { background: var(--amber-pale);  color: var(--seg-returner); }
+.all-btn { background: none; border: 1px solid var(--border); color: var(--text-muted); font-family: var(--font-body); font-size: 11.5px; padding: 4px 12px; border-radius: 8px; cursor: pointer; transition: all 0.18s; flex-shrink: 0; }
+.all-btn:hover { border-color: var(--violet); color: var(--violet); }
+
+/* ── INTERACTION COUNTERS ── */
+.cnt-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 16px; }
+.cnt-card { background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border); padding: 13px 16px; display: flex; align-items: center; gap: 12px; box-shadow: 0 2px 10px rgba(45,42,94,0.05); }
+.cnt-icon { width: 34px; height: 34px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+.cnt-icon.view  { background: var(--violet-pale); }
+.cnt-icon.cart  { background: var(--pink-pale); }
+.cnt-icon.buy   { background: var(--green-pale); }
+.cnt-icon.total { background: rgba(45,42,94,0.07); }
+.cnt-lbl { font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 2px; }
+.cnt-val { font-family: var(--font-display); font-size: 22px; line-height: 1; transition: all 0.25s; }
+.cnt-val.view  { color: var(--violet); }
+.cnt-val.cart  { color: var(--pink); }
+.cnt-val.buy   { color: var(--green); }
+.cnt-val.total { color: var(--navy); }
+.cnt-rate { font-size: 10px; color: var(--text-muted); margin-top: 1px; }
+
+/* ── LEGEND ── */
+.legend { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.leg-pill { display: flex; align-items: center; gap: 5px; padding: 3px 11px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+.leg-pill.view { background: var(--violet-pale); color: var(--violet); }
+.leg-pill.cart { background: var(--pink-pale);   color: var(--pink); }
+.leg-pill.buy  { background: var(--green-pale);  color: var(--green); }
+.leg-hint { font-size: 11px; color: var(--text-muted); }
+
+/* ── RUNWAY ── */
+.runway { background: var(--bg-card); border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 4px 24px rgba(45,42,94,0.08); overflow: hidden; margin-bottom: 16px; }
+.runway-hdr { padding: 14px 22px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+.runway-title { font-size: 13.5px; font-weight: 600; }
+.runway-sub   { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+
+.seg-dot-legend { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.sdl-item { display: flex; align-items: center; gap: 5px; font-size: 10.5px; color: var(--text-muted); }
+.sdl-dot  { width: 9px; height: 9px; border-radius: 50%; box-shadow: 0 0 0 2px white; flex-shrink: 0; }
+
+.lanes { padding: 12px 0 16px; display: flex; flex-direction: column; gap: 8px; }
+.lane { position: relative; height: 68px; overflow: hidden; display: flex; align-items: center; }
+.lane-lbl { width: 118px; flex-shrink: 0; padding: 0 14px 0 22px; font-size: 10.5px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; display: flex; align-items: center; gap: 6px; z-index: 2; background: var(--bg-card); }
+.ldot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.ldot.view { background: var(--violet); }
+.ldot.cart { background: var(--pink); }
+.ldot.buy  { background: var(--green); }
+.lane::before, .lane::after { content: ''; position: absolute; top: 0; bottom: 0; width: 55px; z-index: 3; pointer-events: none; }
+.lane::before { left: 118px; background: linear-gradient(to right, var(--bg-card), transparent); }
+.lane::after  { right: 0;    background: linear-gradient(to left,  var(--bg-card), transparent); }
+.lane-track { position: absolute; left: 134px; right: 14px; top: 50%; transform: translateY(-50%); height: 1px; background: repeating-linear-gradient(to right, var(--border) 0, var(--border) 6px, transparent 6px, transparent 14px); }
+
+/* PRODUCT CARD */
+.pcard { position: absolute; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 7px; padding: 6px 10px 6px 8px; border-radius: 10px; white-space: nowrap; box-shadow: 0 3px 12px rgba(45,42,94,0.13); animation: ride linear forwards; will-change: transform, opacity; z-index: 2; border: 1px solid transparent; }
+.pcard.view { background: var(--violet-pale); border-color: rgba(123,111,232,0.2); }
+.pcard.cart { background: var(--pink-pale);   border-color: rgba(236,72,153,0.2); }
+.pcard.buy  { background: var(--green-pale);  border-color: rgba(16,185,129,0.2); animation: ride linear forwards, buyFlash 0.65s ease 0.05s; }
+@keyframes ride { 0%{opacity:0;transform:translateY(-50%) translateX(0)} 5%{opacity:1} 92%{opacity:1} 100%{opacity:0;transform:translateY(-50%) translateX(var(--travel))} }
+@keyframes buyFlash { 0%{box-shadow:0 0 0 0 rgba(16,185,129,0.55)} 50%{box-shadow:0 0 0 10px rgba(16,185,129,0)} 100%{box-shadow:0 3px 12px rgba(45,42,94,0.13)} }
+.pcard-emoji { font-size: 15px; line-height: 1; }
+.pcard-name { font-size: 11px; font-weight: 600; color: var(--text-dark); max-width: 115px; overflow: hidden; text-overflow: ellipsis; }
+.pcard-meta { font-size: 9.5px; color: var(--text-muted); margin-top: 1px; }
+.pcard-seg  { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 0 2px white; margin: 0 1px; }
+.ptag { font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 5px; text-transform: uppercase; flex-shrink: 0; }
+.ptag.view { background: var(--violet); color: white; }
+.ptag.cart { background: var(--pink);   color: white; }
+.ptag.buy  { background: var(--green);  color: white; }
+.pprice { font-size: 10.5px; font-weight: 700; flex-shrink: 0; }
+.pprice.buy  { color: var(--green); }
+.pprice.cart { color: var(--pink); }
+.pprice.view { color: var(--text-muted); }
+
+/* ── BOTTOM GRID 3-col ── */
+.bottom { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+.bcard { background: var(--bg-card); border-radius: 18px; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(45,42,94,0.07); overflow: hidden; }
+.bcard-hdr { padding: 14px 20px; border-bottom: 1px solid var(--border); }
+.bcard-title { font-size: 13px; font-weight: 600; }
+.bcard-sub   { font-size: 10.5px; color: var(--text-muted); margin-top: 1px; }
+
+/* Revenue by segment table */
+.seg-revenue-table { padding: 8px 0; }
+.srt-row {
+  display: grid;
+  grid-template-columns: 28px 1fr 80px 80px 52px;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border-bottom: 1px solid rgba(123,111,232,0.05);
+  transition: background 0.18s;
+}
+.srt-row:hover { background: var(--violet-pale); }
+.srt-row:last-child { border-bottom: none; }
+.srt-row.header { padding: 6px 18px 8px; border-bottom: 1px solid var(--border); }
+.srt-row.srt-all {
+  background: rgba(45,42,94,0.03);
+  border-bottom: none;
+}
+.srt-row.srt-all:hover { background: rgba(45,42,94,0.07); }
+.srt-header-lbl { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); }
+
+.srt-divider { height: 1px; background: var(--border); margin: 2px 18px 4px; }
+
+.srt-icon { width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+.srt-name { font-size: 12px; font-weight: 600; color: var(--text-dark); }
+.srt-sub  { font-size: 10px; color: var(--text-muted); }
+
+.srt-revenue { font-size: 13px; font-weight: 700; }
+.srt-cart    { font-size: 12.5px; font-weight: 600; color: var(--pink); }
+.srt-orders  { font-size: 12px; font-weight: 500; color: var(--text-mid); }
+.srt-pctall  { font-size: 11.5px; font-weight: 700; text-align: right; }
+
+/* Revenue bar in segment row */
+.srt-bar-wrap { grid-column: 1 / -1; height: 3px; background: rgba(123,111,232,0.1); border-radius: 2px; margin: 0 18px 2px; }
+.srt-bar { height: 100%; border-radius: 2px; transition: width 0.5s ease; }
+
+/* Cart size distribution */
+.cart-dist { padding: 12px 18px; display: flex; flex-direction: column; gap: 9px; }
+.cd-row { display: flex; align-items: center; gap: 10px; }
+.cd-label { font-size: 11px; font-weight: 600; color: var(--text-dark); width: 100px; flex-shrink: 0; }
+.cd-bar-wrap { flex: 1; height: 6px; background: var(--bg); border-radius: 3px; overflow: hidden; }
+.cd-bar { height: 100%; border-radius: 3px; transition: width 0.5s ease; }
+.cd-val { font-size: 11px; font-weight: 700; width: 52px; text-align: right; flex-shrink: 0; }
+.cd-count { font-size: 10px; color: var(--text-muted); width: 40px; text-align: right; flex-shrink: 0; }
+
+/* Heatmap */
+.hm-grid { padding: 12px 16px; display: grid; grid-template-columns: repeat(3,1fr); gap: 7px; }
+.hm-cell { border-radius: 9px; padding: 9px 10px 7px; transition: all 0.35s; background: var(--bg); }
+.hm-cat  { font-size: 9.5px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hm-val  { font-size: 20px; font-weight: 600; transition: all 0.25s; }
+.hm-bars { display: flex; gap: 3px; margin-top: 5px; height: 3px; border-radius: 2px; overflow: hidden; }
+.hm-v { background: var(--violet); transition: flex 0.4s; }
+.hm-c { background: var(--pink);   transition: flex 0.4s; }
+.hm-b { background: var(--green);  transition: flex 0.4s; }
+
+/* Event log */
+.ev-list { padding: 2px 0; max-height: 100%; overflow: hidden; }
+.ev-row { display: flex; align-items: center; gap: 8px; padding: 7px 18px; border-bottom: 1px solid rgba(123,111,232,0.05); animation: slideIn 0.24s ease; transition: background 0.18s; }
+.ev-row:hover { background: var(--violet-pale); }
+.ev-row:last-child { border-bottom: none; }
+@keyframes slideIn { from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)} }
+.ev-time  { font-size: 9.5px; color: var(--text-muted); width: 44px; flex-shrink: 0; font-variant-numeric: tabular-nums; }
+.ev-em    { font-size: 13px; width: 16px; text-align: center; flex-shrink: 0; }
+.ev-name  { font-size: 11px; font-weight: 500; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ev-seg   { font-size: 9.5px; font-weight: 700; padding: 2px 6px; border-radius: 10px; flex-shrink: 0; }
+.ev-seg.none     { background: rgba(139,135,160,0.14); color: var(--seg-none); }
+.ev-seg.once     { background: var(--violet-pale); color: var(--seg-once); }
+.ev-seg.loyal    { background: var(--green-pale);  color: var(--seg-loyal); }
+.ev-seg.returner { background: var(--amber-pale);  color: var(--seg-returner); }
+.ev-type { font-size: 9.5px; font-weight: 700; padding: 2px 6px; border-radius: 10px; flex-shrink: 0; }
+.ev-type.view { background: var(--violet-pale); color: var(--violet); }
+.ev-type.cart { background: var(--pink-pale);   color: var(--pink); }
+.ev-type.buy  { background: var(--green-pale);  color: var(--green); }
+.ev-price { font-size: 11px; font-weight: 700; width: 52px; text-align: right; flex-shrink: 0; }
+.ev-price.buy  { color: var(--green); }
+.ev-price.cart { color: var(--pink); }
+.ev-price.view { color: var(--text-muted); }
+
+/* Flash animation for values updating */
+@keyframes flashUp { 0%{opacity:0.4;transform:scale(0.95)}100%{opacity:1;transform:scale(1)} }
+.flash { animation: flashUp 0.3s ease; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><div class="logo-dot"></div>Mapp Fashion <span style="font-family:var(--font-body);font-size:13px;opacity:0.4;font-weight:300;margin-left:3px">· Live Product Stream</span></div>
+  <div class="hdr-right">
+    <div class="spd-wrap">
+      <span class="spd-label">Speed:</span>
+      <button class="spd-btn" onclick="setSpeed(2000,this)">Slow</button>
+      <button class="spd-btn active" onclick="setSpeed(1000,this)">Normal</button>
+      <button class="spd-btn" onclick="setSpeed(500,this)">Fast</button>
+    </div>
+    <button class="pause-btn" id="pauseBtn" onclick="togglePause()">⏸ Pause</button>
+    <button class="pause-btn" id="soundBtn" onclick="toggleSound(this)" style="background:rgba(16,185,129,0.18);border-color:rgba(16,185,129,0.32);color:#6EE7B7;">🔔 Sound</button>
+    <div class="live-pill"><div class="live-dot"></div>LIVE</div>
+  </div>
+</header>
+
+<main>
+
+  <!-- GLOBAL KPI STRIP -->
+  <div class="global-kpis">
+    <div class="gkpi revenue">
+      <div class="gkpi-label">Total Revenue</div>
+      <div class="gkpi-value" id="g-revenue">€0</div>
+      <div class="gkpi-sub">from purchases</div>
+      <div class="gkpi-rate" id="g-revenue-rate">€0 / min</div>
+    </div>
+    <div class="gkpi cart-val">
+      <div class="gkpi-label">Cart Value (open)</div>
+      <div class="gkpi-value" id="g-cartval">€0</div>
+      <div class="gkpi-sub">potential revenue</div>
+      <div class="gkpi-rate" id="g-cartval-rate">— items in carts</div>
+    </div>
+    <div class="gkpi orders">
+      <div class="gkpi-label">Orders</div>
+      <div class="gkpi-value" id="g-orders">0</div>
+      <div class="gkpi-sub">completed</div>
+      <div class="gkpi-rate" id="g-aov">Ø €0 / order</div>
+    </div>
+    <div class="gkpi cart-sz">
+      <div class="gkpi-label">Avg Cart Size</div>
+      <div class="gkpi-value" id="g-cartsize">0</div>
+      <div class="gkpi-sub">items per cart</div>
+      <div class="gkpi-rate" id="g-cartsize-sub">across all segments</div>
+    </div>
+    <div class="gkpi views">
+      <div class="gkpi-label">Product Views</div>
+      <div class="gkpi-value" id="g-views">0</div>
+      <div class="gkpi-sub">this session</div>
+      <div class="gkpi-rate" id="g-views-rate">— / min</div>
+    </div>
+    <div class="gkpi conv">
+      <div class="gkpi-label">Conversion Rate</div>
+      <div class="gkpi-value" id="g-conv">0.0%</div>
+      <div class="gkpi-sub">views → purchase</div>
+      <div class="gkpi-rate" id="g-conv-sub">live estimate</div>
+    </div>
+  </div>
+
+  <!-- SEGMENT CARDS -->
+  <div class="seg-grid">
+    <div class="seg-card none active" id="seg-none" onclick="toggleSeg('none')">
+      <div class="seg-top"><div class="seg-icon">👤</div><div class="seg-check">✓</div></div>
+      <div class="seg-name">Non-Customer</div>
+      <div class="seg-visitors" id="sc-none">0</div>
+      <div class="seg-pct-row"><span class="seg-sub">visitors online</span><span class="seg-pct" id="sp-none">0%</span></div>
+      <div class="seg-metrics">
+        <div class="sm-item">
+          <div class="sm-label">Revenue</div>
+          <div class="sm-value hi" id="sm-none-rev">€0</div>
+          <div class="sm-sub" id="sm-none-orders">0 orders</div>
+        </div>
+        <div class="sm-item">
+          <div class="sm-label">Cart Value</div>
+          <div class="sm-value" id="sm-none-cart">€0</div>
+          <div class="sm-sub" id="sm-none-cartct">0 in cart</div>
+        </div>
+        <div class="sm-item">
+          <div class="sm-label">Avg Order</div>
+          <div class="sm-value" id="sm-none-aov">—</div>
+          <div class="sm-sub" id="sm-none-cartsize">Ø 0 items</div>
+        </div>
+      </div>
+      <div class="seg-spark" id="sk-none"></div>
+    </div>
+
+    <div class="seg-card once active" id="seg-once" onclick="toggleSeg('once')">
+      <div class="seg-top"><div class="seg-icon">🛍</div><div class="seg-check">✓</div></div>
+      <div class="seg-name">One-Time Buyer</div>
+      <div class="seg-visitors" id="sc-once">0</div>
+      <div class="seg-pct-row"><span class="seg-sub">visitors online</span><span class="seg-pct" id="sp-once">0%</span></div>
+      <div class="seg-metrics">
+        <div class="sm-item">
+          <div class="sm-label">Revenue</div>
+          <div class="sm-value hi" id="sm-once-rev">€0</div>
+          <div class="sm-sub" id="sm-once-orders">0 orders</div>
+        </div>
+        <div class="sm-item">
+          <div class="sm-label">Cart Value</div>
+          <div class="sm-value" id="sm-once-cart">€0</div>
+          <div class="sm-sub" id="sm-once-cartct">0 in cart</div>
+        </div>
+        <div class="sm-item">
+          <div class="sm-label">Avg Order</div>
+          <div class="sm-value" id="sm-once-aov">—</div>
+          <div class="sm-sub" id="sm-once-cartsize">Ø 0 items</div>
+        </div>
+      </div>
+      <div class="seg-spark" id="sk-once"></div>
+    </div>
+
+    <div class="seg-card loyal active" id="seg-loyal" onclick="toggleSeg('loyal')">
+      <div class="seg-top"><div class="seg-icon">⭐</div><div class="seg-check">✓</div></div>
+      <div class="seg-name">Loyal Customer</div>
+      <div class="seg-visitors" id="sc-loyal">0</div>
+      <div class="seg-pct-row"><span class="seg-sub">visitors online</span><span class="seg-pct" id="sp-loyal">0%</span></div>
+      <div class="seg-metrics">
+        <div class="sm-item">
+          <div class="sm-label">Revenue</div>
+          <div class="sm-value hi" id="sm-loyal-rev">€0</div>
+          <div class="sm-sub" id="sm-loyal-orders">0 orders</div>
+        </div>
+        <div class="sm-item">
+          <div class="sm-label">Cart Value</div>
+          <div class="sm-value" id="sm-loyal-cart">€0</div>
+          <div class="sm-sub" id="sm-loyal-cartct">0 in cart</div>
+        </div>
+        <div class="sm-item">
+          <div class="sm-label">Avg Order</div>
+          <div class="sm-value" id="sm-loyal-aov">—</div>
+          <div class="sm-sub" id="sm-loyal-cartsize">Ø 0 items</div>
+        </div>
+      </div>
+      <div class="seg-spark" id="sk-loyal"></div>
+    </div>
+
+    <div class="seg-card returner active" id="seg-returner" onclick="toggleSeg('returner')">
+      <div class="seg-top"><div class="seg-icon">↩️</div><div class="seg-check">✓</div></div>
+      <div class="seg-name">Returner</div>
+      <div class="seg-visitors" id="sc-returner">0</div>
+      <div class="seg-pct-row"><span class="seg-sub">visitors online</span><span class="seg-pct" id="sp-returner">0%</span></div>
+      <div class="seg-metrics">
+        <div class="sm-item">
+          <div class="sm-label">Revenue</div>
+          <div class="sm-value hi" id="sm-returner-rev">€0</div>
+          <div class="sm-sub" id="sm-returner-orders">0 orders</div>
+        </div>
+        <div class="sm-item">
+          <div class="sm-label">Cart Value</div>
+          <div class="sm-value" id="sm-returner-cart">€0</div>
+          <div class="sm-sub" id="sm-returner-cartct">0 in cart</div>
+        </div>
+        <div class="sm-item">
+          <div class="sm-label">Avg Order</div>
+          <div class="sm-value" id="sm-returner-aov">—</div>
+          <div class="sm-sub" id="sm-returner-cartsize">Ø 0 items</div>
+        </div>
+      </div>
+      <div class="seg-spark" id="sk-returner"></div>
+    </div>
+  </div>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <span class="filter-lbl">Showing:</span>
+    <div class="active-pills" id="activePills"></div>
+    <button class="all-btn" onclick="resetFilters()">Show All</button>
+  </div>
+
+  <!-- INTERACTION COUNTERS -->
+  <div class="cnt-row">
+    <div class="cnt-card"><div class="cnt-icon view">👁</div><div><div class="cnt-lbl">Viewed</div><div class="cnt-val view" id="cnt-view">0</div><div class="cnt-rate" id="rate-view">— / min</div></div></div>
+    <div class="cnt-card"><div class="cnt-icon cart">🛒</div><div><div class="cnt-lbl">Added to Cart</div><div class="cnt-val cart" id="cnt-cart">0</div><div class="cnt-rate" id="rate-cart">— / min</div></div></div>
+    <div class="cnt-card"><div class="cnt-icon buy">✓</div><div><div class="cnt-lbl">Purchased</div><div class="cnt-val buy" id="cnt-buy">0</div><div class="cnt-rate" id="rate-buy">— / min</div></div></div>
+    <div class="cnt-card"><div class="cnt-icon total">⚡</div><div><div class="cnt-lbl">Total Events</div><div class="cnt-val total" id="cnt-total">0</div><div class="cnt-rate" id="rate-total">— / min</div></div></div>
+  </div>
+
+  <!-- LEGEND -->
+  <div class="legend">
+    <span class="leg-pill view">👁 Viewed</span>
+    <span class="leg-pill cart">🛒 Added to Cart</span>
+    <span class="leg-pill buy">✓ Purchased</span>
+    <span class="leg-hint">· Colored dot on card = visitor segment · price shown in green (purchase) or pink (cart)</span>
+  </div>
+
+  <!-- RUNWAY -->
+  <div class="runway">
+    <div class="runway-hdr">
+      <div>
+        <div class="runway-title">Live Product Interaction Stream</div>
+        <div class="runway-sub">Cards flow left → right · dot color = segment · price visible per interaction</div>
+      </div>
+      <div class="seg-dot-legend">
+        <div class="sdl-item"><div class="sdl-dot" style="background:var(--seg-none)"></div>Non-Customer</div>
+        <div class="sdl-item"><div class="sdl-dot" style="background:var(--seg-once)"></div>One-Time Buyer</div>
+        <div class="sdl-item"><div class="sdl-dot" style="background:var(--seg-loyal)"></div>Loyal Customer</div>
+        <div class="sdl-item"><div class="sdl-dot" style="background:var(--seg-returner)"></div>Returner</div>
+      </div>
+    </div>
+    <div class="lanes">
+      <div class="lane" id="lane-view"><div class="lane-lbl"><div class="ldot view"></div>Viewed</div><div class="lane-track"></div></div>
+      <div class="lane" id="lane-cart"><div class="lane-lbl"><div class="ldot cart"></div>Cart</div><div class="lane-track"></div></div>
+      <div class="lane" id="lane-buy"><div class="lane-lbl"><div class="ldot buy"></div>Purchased</div><div class="lane-track"></div></div>
+    </div>
+  </div>
+
+  <!-- BOTTOM 3-col -->
+  <div class="bottom">
+
+    <!-- Revenue by Segment -->
+    <div class="bcard">
+      <div class="bcard-hdr">
+        <div class="bcard-title">Revenue & Cart Value by Segment</div>
+        <div class="bcard-sub">Cumulative this session · filtered segments</div>
+      </div>
+      <div class="seg-revenue-table">
+        <div class="srt-row header">
+          <div></div>
+          <div class="srt-header-lbl">Segment</div>
+          <div class="srt-header-lbl">Revenue<br><span style="font-weight:400;opacity:0.6">% of all</span></div>
+          <div class="srt-header-lbl">Cart Value<br><span style="font-weight:400;opacity:0.6">% of all</span></div>
+          <div class="srt-header-lbl">Orders<br><span style="font-weight:400;opacity:0.6">% of all</span></div>
+        </div>
+        <div id="revTableBody"></div>
+      </div>
+    </div>
+
+    <!-- Cart Size Distribution -->
+    <div class="bcard">
+      <div class="bcard-hdr">
+        <div class="bcard-title">Avg Cart Value by Segment</div>
+        <div class="bcard-sub">Average € per open cart · filtered segments</div>
+      </div>
+      <div class="cart-dist" id="cartDist"></div>
+    </div>
+
+    <!-- Event Log -->
+    <div class="bcard">
+      <div class="bcard-hdr">
+        <div class="bcard-title">Event Log</div>
+        <div class="bcard-sub">Most recent interactions · filtered segments</div>
+      </div>
+      <div class="ev-list" id="evList"></div>
+    </div>
+
+  </div>
+
+</main>
+
+<script>
+// ── DATA ─────────────────────────────────────────────────────────────────────
+
+const PRODUCTS = [
+  {name:'Summer Dress Lina',   cat:'Dresses',     price:79.99,  emoji:'👗'},
+  {name:'Floral Midi Skirt',   cat:'Dresses',     price:59.99,  emoji:'👗'},
+  {name:'Wrap Dress Sienna',   cat:'Dresses',     price:94.99,  emoji:'👗'},
+  {name:'Linen Dress Mara',    cat:'Dresses',     price:69.99,  emoji:'👗'},
+  {name:'Cloud Run Sneaker',   cat:'Shoes',       price:129.99, emoji:'👟'},
+  {name:'Palma Sandal',        cat:'Shoes',       price:89.99,  emoji:'👡'},
+  {name:'Satin Mule Nude',     cat:'Shoes',       price:74.99,  emoji:'👡'},
+  {name:'Ecru Linen Blazer',   cat:'Jackets',     price:149.99, emoji:'🧥'},
+  {name:'Washed Denim Jacket', cat:'Jackets',     price:119.99, emoji:'🧥'},
+  {name:'Silk Scarf Tulum',    cat:'Accessories', price:39.99,  emoji:'🧣'},
+  {name:'Straw Bag Ibiza',     cat:'Accessories', price:54.99,  emoji:'👜'},
+  {name:'Riviera Sunglasses',  cat:'Accessories', price:44.99,  emoji:'🕶️'},
+  {name:'Wide-Leg Jeans Maya', cat:'Trousers',    price:99.99,  emoji:'👖'},
+  {name:'Linen Capri Pants',   cat:'Trousers',    price:79.99,  emoji:'👖'},
+  {name:'Coral Bikini Set',    cat:'Swimwear',    price:69.99,  emoji:'👙'},
+  {name:'Riviera Swimsuit',    cat:'Swimwear',    price:84.99,  emoji:'🩱'},
+];
+
+// Segment definitions with behavioral multipliers
+// Loyal customers buy more expensive items and larger carts
+// Returners tend to cart a lot but convert less
+// Non-customers browse but rarely buy
+const SEGS = [
+  {id:'none',     label:'Non-Customer',   icon:'👤', color:'#8B87A0',
+   weight:40, buyMulti:0.4,  cartMulti:0.6,  cartItems:1.2},
+  {id:'once',     label:'One-Time Buyer', icon:'🛍', color:'#7B6FE8',
+   weight:30, buyMulti:1.0,  cartMulti:1.0,  cartItems:1.8},
+  {id:'loyal',    label:'Loyal Customer', icon:'⭐', color:'#10B981',
+   weight:18, buyMulti:1.8,  cartMulti:0.7,  cartItems:2.6},
+  {id:'returner', label:'Returner',       icon:'↩️', color:'#F59E0B',
+   weight:12, buyMulti:0.7,  cartMulti:1.4,  cartItems:2.1},
+];
+
+const INTS = [
+  {id:'view', icon:'👁',  label:'Viewed',        weight:60},
+  {id:'cart', icon:'🛒',  label:'Added to Cart', weight:28},
+  {id:'buy',  icon:'✓',   label:'Purchased',     weight:12},
+];
+
+const CATS = ['Dresses','Shoes','Jackets','Accessories','Trousers','Swimwear'];
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+
+const activeSegs = new Set(['none','once','loyal','returner']);
+const segCounts  = {none:0, once:0, loyal:0, returner:0};
+const segHist    = {none:[], once:[], loyal:[], returner:[]};
+
+// Per-segment financial tracking
+const segFinance = {
+  none:     {revenue:0, orders:0, cartValue:0, cartItems:0, cartCount:0},
+  once:     {revenue:0, orders:0, cartValue:0, cartItems:0, cartCount:0},
+  loyal:    {revenue:0, orders:0, cartValue:0, cartItems:0, cartCount:0},
+  returner: {revenue:0, orders:0, cartValue:0, cartItems:0, cartCount:0},
+};
+
+// Global totals
+const global = {revenue:0, orders:0, cartValue:0, cartItems:0, cartCount:0, views:0};
+const rateWin = {view:[], cart:[], buy:[], revenue:[], cartval:[]};
+
+const catData = {};
+CATS.forEach(c => catData[c] = {view:0, cart:0, buy:0});
+
+let paused=false, spawnMs=1000, spawnTimer, logRows=[];
+
+// Visitor pool
+const POOL = 1400;
+const pool = Array.from({length:POOL}, ()=> wSeg());
+function rebuildCounts(){ Object.keys(segCounts).forEach(k=>segCounts[k]=0); pool.forEach(s=>segCounts[s]++); }
+rebuildCounts();
+
+// Pool drift
+setInterval(()=>{
+  const i=Math.floor(Math.random()*pool.length);
+  const os=pool[i], ns=wSeg();
+  pool[i]=ns; segCounts[os]--; segCounts[ns]++;
+  updateSegUI();
+}, 2400);
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+
+function rand(a){return a[Math.floor(Math.random()*a.length)];}
+function wPick(items){const t=items.reduce((s,x)=>s+x.weight,0);let r=Math.random()*t;for(const x of items){r-=x.weight;if(r<=0)return x;}return items[0];}
+function wSeg(){return wPick(SEGS).id;}
+function wInt(){return wPick(INTS);}
+function fmtT(d){return d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0')+':'+d.getSeconds().toString().padStart(2,'0');}
+function fmtEur(v){return '€'+v.toFixed(2);}
+function fmtEurK(v){return v>=1000?'€'+(v/1000).toFixed(1)+'K':'€'+Math.round(v);}
+function flash(el){el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');}
+
+// Adjusted price for segment behavior
+function adjPrice(basePrice, segId, intType) {
+  const seg = SEGS.find(s=>s.id===segId);
+  // Loyal customers tend to buy pricier items, non-customers cheaper
+  const priceJitter = {none:0.85, once:1.0, loyal:1.2, returner:0.95}[segId];
+  // Cart items count varies by segment
+  const items = Math.max(1, Math.round(seg.cartItems + (Math.random()-0.5)));
+  const price = basePrice * priceJitter * (intType==='buy'||intType==='cart' ? items : 1);
+  return {price: +price.toFixed(2), items};
+}
+
+// ── SEGMENT UI ────────────────────────────────────────────────────────────────
+
+function updateSegUI(){
+  const total = Object.values(segCounts).reduce((s,v)=>s+v,0)||1;
+  SEGS.forEach(sg=>{
+    const v=segCounts[sg.id];
+    const el=document.getElementById('sc-'+sg.id);
+    if(el)el.textContent=v.toLocaleString('en-US');
+    const sp=document.getElementById('sp-'+sg.id);
+    if(sp)sp.textContent=Math.round(v/total*100)+'%';
+    // Sparkline
+    const h=segHist[sg.id]; h.push(v); if(h.length>8)h.shift();
+    const sk=document.getElementById('sk-'+sg.id);
+    if(!sk)return;
+    const mx=Math.max(...h,1);
+    sk.innerHTML=h.map(val=>`<div class="spark-b" style="height:${Math.max(Math.round(val/mx*100),5)}%"></div>`).join('');
+  });
+}
+
+function updateSegFinanceUI(segId){
+  const f=segFinance[segId];
+  const revEl  = document.getElementById('sm-'+segId+'-rev');
+  const cartEl = document.getElementById('sm-'+segId+'-cart');
+  const aovEl  = document.getElementById('sm-'+segId+'-aov');
+  if(revEl){ revEl.textContent=fmtEurK(f.revenue); flash(revEl); }
+  const ordEl=document.getElementById('sm-'+segId+'-orders');
+  if(ordEl) ordEl.textContent=f.orders+' order'+(f.orders!==1?'s':'');
+  if(cartEl){ cartEl.textContent=fmtEurK(f.cartValue); flash(cartEl); }
+  const cartctEl=document.getElementById('sm-'+segId+'-cartct');
+  if(cartctEl) cartctEl.textContent=f.cartCount+' in cart';
+  if(aovEl) aovEl.textContent=f.orders>0?fmtEurK(f.revenue/f.orders):'—';
+  const csEl=document.getElementById('sm-'+segId+'-cartsize');
+  if(csEl) csEl.textContent='Ø '+(f.cartCount>0?(f.cartItems/f.cartCount).toFixed(1):'0')+' items';
+}
+
+// ── GLOBAL KPI UI ────────────────────────────────────────────────────────────
+
+function updateGlobalUI(){
+  const revEl=document.getElementById('g-revenue');
+  if(revEl){revEl.textContent=fmtEurK(global.revenue);flash(revEl);}
+  const cvEl=document.getElementById('g-cartval');
+  if(cvEl){cvEl.textContent=fmtEurK(global.cartValue);flash(cvEl);}
+
+  const oEl=document.getElementById('g-orders');
+  if(oEl)oEl.textContent=global.orders;
+  const aovEl=document.getElementById('g-aov');
+  if(aovEl)aovEl.textContent=global.orders>0?'Ø '+fmtEurK(global.revenue/global.orders)+' / order':'Ø €0 / order';
+
+  const csEl=document.getElementById('g-cartsize');
+  if(csEl)csEl.textContent=global.cartCount>0?(global.cartItems/global.cartCount).toFixed(1):'0';
+
+  const vEl=document.getElementById('g-views');
+  if(vEl)vEl.textContent=global.views.toLocaleString('en-US');
+
+  const convEl=document.getElementById('g-conv');
+  if(convEl)convEl.textContent=global.views>0?((global.orders/global.views)*100).toFixed(1)+'%':'0.0%';
+
+  // Revenue rate (per min)
+  const now=Date.now();
+  rateWin.revenue=rateWin.revenue.filter(x=>now-x.ts<60000);
+  const revPerMin=rateWin.revenue.reduce((s,x)=>s+x.val,0);
+  const rrEl=document.getElementById('g-revenue-rate');
+  if(rrEl)rrEl.textContent=fmtEurK(revPerMin)+' / min';
+
+  rateWin.cartval=rateWin.cartval.filter(x=>now-x.ts<60000);
+  const cvPerMin=rateWin.cartval.reduce((s,x)=>s+x.val,0);
+  const crEl=document.getElementById('g-cartval-rate');
+  if(crEl)crEl.textContent=global.cartCount+' item'+(global.cartCount!==1?'s':'')+' in carts';
+
+  const vrEl=document.getElementById('g-views-rate');
+  rateWin.view=rateWin.view.filter(t=>now-t<60000);
+  if(vrEl)vrEl.textContent=rateWin.view.length+' / min';
+}
+
+// ── REVENUE TABLE ────────────────────────────────────────────────────────────
+
+function pct(val, total) {
+  if (!total) return '<span style="color:var(--text-muted)">—</span>';
+  const p = Math.round((val / total) * 100);
+  return `<span style="opacity:0.65;font-size:9.5px;font-weight:600">${p}%</span>`;
+}
+
+function metricCell(value, total, color, fmt) {
+  const p = pct(value, total);
+  return `<div>
+    <div style="font-size:13px;font-weight:700;color:${color};line-height:1.2">${fmt(value)}</div>
+    <div style="margin-top:1px">${p}</div>
+  </div>`;
+}
+
+function updateRevTable(){
+  const body = document.getElementById('revTableBody');
+  if (!body) return;
+  const activeList = SEGS.filter(s => activeSegs.has(s.id));
+
+  // Grand totals across ALL 4 segments — the "100%" baseline
+  const totalRev      = SEGS.reduce((s,sg) => s + segFinance[sg.id].revenue,   0);
+  const totalCart     = SEGS.reduce((s,sg) => s + segFinance[sg.id].cartValue, 0);
+  const totalOrders   = SEGS.reduce((s,sg) => s + segFinance[sg.id].orders,    0);
+  const totalVisitors = Object.values(segCounts).reduce((s,v) => s+v, 0);
+
+  // Bar width baseline = total revenue
+  const maxRev = Math.max(totalRev, 1);
+
+  // ── "All Visitors" row — always 100% for each metric ──
+  const allRow = `
+    <div class="srt-row srt-all">
+      <div class="srt-icon" style="background:rgba(45,42,94,0.1)">🌐</div>
+      <div>
+        <div class="srt-name" style="color:var(--navy)">All Visitors</div>
+        <div class="srt-sub">${totalVisitors.toLocaleString()} online</div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:700;color:var(--navy);line-height:1.2">${fmtEurK(totalRev)}</div>
+        <div><span style="opacity:0.65;font-size:9.5px;font-weight:600">100%</span></div>
+      </div>
+      <div>
+        <div style="font-size:12.5px;font-weight:700;color:var(--pink);line-height:1.2">${fmtEurK(totalCart)}</div>
+        <div><span style="opacity:0.65;font-size:9.5px;font-weight:600">100%</span></div>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:600;color:var(--text-mid);line-height:1.2">${totalOrders}</div>
+        <div><span style="opacity:0.65;font-size:9.5px;font-weight:600">100%</span></div>
+      </div>
+    </div>
+    <div class="srt-bar-wrap">
+      <div class="srt-bar" style="width:100%;background:linear-gradient(90deg,var(--violet),var(--pink))"></div>
+    </div>
+    <div class="srt-divider"></div>
+  `;
+
+  // ── Per-segment rows ──
+  const segRows = activeList.map(seg => {
+    const f      = segFinance[seg.id];
+    const barPct = Math.round((f.revenue / maxRev) * 100);
+    const icBg   = {
+      none:     'rgba(139,135,160,0.14)',
+      once:     'var(--violet-pale)',
+      loyal:    'var(--green-pale)',
+      returner: 'var(--amber-pale)',
+    }[seg.id];
+    return `
+      <div class="srt-row">
+        <div class="srt-icon" style="background:${icBg}">${seg.icon}</div>
+        <div>
+          <div class="srt-name">${seg.label}</div>
+          <div class="srt-sub">${segCounts[seg.id].toLocaleString()} online</div>
+        </div>
+        ${metricCell(f.revenue,   totalRev,    seg.color,       fmtEurK)}
+        ${metricCell(f.cartValue, totalCart,   'var(--pink)',   fmtEurK)}
+        ${metricCell(f.orders,    totalOrders, 'var(--text-mid)', v => v)}
+      </div>
+      <div class="srt-bar-wrap">
+        <div class="srt-bar" style="width:${barPct}%;background:${seg.color}"></div>
+      </div>
+    `;
+  }).join('');
+
+  body.innerHTML = allRow + segRows;
+}
+
+// ── CART DISTRIBUTION ────────────────────────────────────────────────────────
+
+function updateCartDist(){
+  const el=document.getElementById('cartDist');
+  if(!el)return;
+  const activeList=SEGS.filter(s=>activeSegs.has(s.id));
+  const maxAvg=Math.max(...activeList.map(s=>{
+    const f=segFinance[s.id];
+    return f.cartCount>0?f.cartValue/f.cartCount:0;
+  }),1);
+
+  const colors={none:'var(--seg-none)',once:'var(--seg-once)',loyal:'var(--seg-loyal)',returner:'var(--seg-returner)'};
+
+  el.innerHTML=activeList.map(seg=>{
+    const f=segFinance[seg.id];
+    const avg=f.cartCount>0?f.cartValue/f.cartCount:0;
+    const pct=Math.round((avg/maxAvg)*100);
+    const avgItems=f.cartCount>0?(f.cartItems/f.cartCount).toFixed(1):'—';
+    return `
+      <div class="cd-row">
+        <div class="cd-label">${seg.icon} ${seg.label}</div>
+        <div class="cd-bar-wrap"><div class="cd-bar" style="width:${pct}%;background:${colors[seg.id]}"></div></div>
+        <div class="cd-val" style="color:${colors[seg.id]}">${avg>0?fmtEurK(avg):'—'}</div>
+        <div class="cd-count">${avgItems} items</div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ── RUNWAY ────────────────────────────────────────────────────────────────────
+
+function spawnCard(intType, product, segId, adjP){
+  const lane=document.getElementById('lane-'+intType.id);
+  if(!lane)return;
+  const laneW=lane.offsetWidth, startX=134, travel=laneW-startX+80;
+  const dur=(spawnMs===500?5:spawnMs===1000?9:14)+(Math.random()*1.4-0.7);
+  const segObj=SEGS.find(s=>s.id===segId);
+
+  const card=document.createElement('div');
+  card.className='pcard '+intType.id;
+  card.style.left=startX+'px';
+  card.style.setProperty('--travel',travel+'px');
+  card.style.animationDuration=dur+'s';
+
+  // Show price on cart and buy; show view price more subtly
+  const priceStr = intType.id==='view'
+    ? '€'+product.price.toFixed(2)
+    : fmtEur(adjP.price) + (adjP.items>1?' ×'+adjP.items:'');
+
+  card.innerHTML=`
+    <div class="pcard-emoji">${product.emoji}</div>
+    <div><div class="pcard-name">${product.name}</div><div class="pcard-meta">${product.cat}</div></div>
+    <div class="pcard-seg" style="background:${segObj.color}" title="${segObj.label}"></div>
+    <span class="ptag ${intType.id}">${intType.icon}</span>
+    <span class="pprice ${intType.id}">${priceStr}</span>
+  `;
+  lane.appendChild(card);
+  card.addEventListener('animationend',()=>card.remove());
+}
+
+// ── EVENT LOG ─────────────────────────────────────────────────────────────────
+
+function addLog(intType, product, segId, adjP){
+  const list=document.getElementById('evList');
+  const segObj=SEGS.find(s=>s.id===segId);
+  const priceStr = intType.id==='view' ? '€'+product.price.toFixed(2) : fmtEur(adjP.price);
+  const row=document.createElement('div');
+  row.className='ev-row';
+  row.innerHTML=`
+    <span class="ev-time">${fmtT(new Date())}</span>
+    <span class="ev-em">${product.emoji}</span>
+    <span class="ev-name">${product.name}</span>
+    <span class="ev-seg ${segId}">${segObj.icon} ${segObj.label}</span>
+    <span class="ev-type ${intType.id}">${intType.label}</span>
+    <span class="ev-price ${intType.id}">${priceStr}</span>
+  `;
+  list.prepend(row);
+  logRows.unshift(row);
+  while(logRows.length>10)logRows.pop().remove();
+}
+
+// ── INTERACTION COUNTER UI ────────────────────────────────────────────────────
+
+const intCounts={view:0,cart:0,buy:0};
+function updateIntUI(){
+  document.getElementById('cnt-view').textContent  = intCounts.view.toLocaleString('en-US');
+  document.getElementById('cnt-cart').textContent  = intCounts.cart.toLocaleString('en-US');
+  document.getElementById('cnt-buy').textContent   = intCounts.buy.toLocaleString('en-US');
+  document.getElementById('cnt-total').textContent = (intCounts.view+intCounts.cart+intCounts.buy).toLocaleString('en-US');
+  const now=Date.now();
+  ['cart','buy'].forEach(t=>{
+    rateWin[t]=rateWin[t].filter(ts=>now-ts<60000);
+    document.getElementById('rate-'+t).textContent=rateWin[t].length+' / min';
+  });
+  document.getElementById('rate-total').textContent=(rateWin.view.length+(rateWin.cart||[]).length+(rateWin.buy||[]).length)+' / min';
+}
+
+// ── FILTER ────────────────────────────────────────────────────────────────────
+
+function toggleSeg(id){
+  if(activeSegs.has(id)){if(activeSegs.size===1)return;activeSegs.delete(id);document.getElementById('seg-'+id).classList.remove('active');document.getElementById('seg-'+id).classList.add('inactive');}
+  else{activeSegs.add(id);document.getElementById('seg-'+id).classList.add('active');document.getElementById('seg-'+id).classList.remove('inactive');}
+  updatePills();updateRevTable();updateCartDist();
+}
+function resetFilters(){SEGS.forEach(s=>{activeSegs.add(s.id);document.getElementById('seg-'+s.id).classList.add('active');document.getElementById('seg-'+s.id).classList.remove('inactive');});updatePills();updateRevTable();updateCartDist();}
+function updatePills(){
+  const wrap=document.getElementById('activePills');wrap.innerHTML='';
+  SEGS.filter(s=>activeSegs.has(s.id)).forEach(s=>{const p=document.createElement('span');p.className='seg-pill '+s.id;p.textContent=s.icon+' '+s.label;wrap.appendChild(p);});
+}
+
+// ── AUDIO ENGINE · Vintage Cash Register ─────────────────────────────────────
+let audioCtx = null;
+let soundOn  = true;
+
+function getCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+
+// Utility: create a sharp percussive noise burst (mechanical click / key strike)
+function mechClick(ctx, t, freq, dur, vol) {
+  // Noise source via buffer
+  const bufSize = ctx.sampleRate * dur;
+  const buf     = ctx.createBuffer(1, bufSize, ctx.sampleRate);
+  const data    = buf.getChannelData(0);
+  for (let i = 0; i < bufSize; i++) data[i] = (Math.random() * 2 - 1);
+
+  const noise  = ctx.createBufferSource();
+  noise.buffer = buf;
+
+  // Band-pass the noise so it has a "clack" character
+  const bp = ctx.createBiquadFilter();
+  bp.type            = 'bandpass';
+  bp.frequency.value = freq;
+  bp.Q.value         = 1.8;
+
+  const env = ctx.createGain();
+  env.gain.setValueAtTime(vol, t);
+  env.gain.exponentialRampToValueAtTime(0.001, t + dur);
+
+  noise.connect(bp);
+  bp.connect(env);
+  env.connect(ctx.destination);
+  noise.start(t);
+  noise.stop(t + dur + 0.005);
+}
+
+// Utility: tonal ping (bell / spring tone)
+function tonalPing(ctx, t, freq, dur, vol, type = 'triangle') {
+  const osc = ctx.createOscillator();
+  const env = ctx.createGain();
+  osc.type = type;
+  osc.frequency.setValueAtTime(freq, t);
+  osc.frequency.exponentialRampToValueAtTime(freq * 0.995, t + dur); // tiny pitch sag
+
+  env.gain.setValueAtTime(0, t);
+  env.gain.linearRampToValueAtTime(vol, t + 0.006);
+  env.gain.exponentialRampToValueAtTime(0.001, t + dur);
+
+  osc.connect(env);
+  env.connect(ctx.destination);
+  osc.start(t);
+  osc.stop(t + dur + 0.01);
+}
+
+// Utility: metallic spring/bell resonance (the "cha-ching" ring)
+function springRing(ctx, t) {
+  // Two detuned triangle waves = old spring bell character
+  [[1318, 0.18], [1397, 0.13], [1480, 0.09]].forEach(([f, v], i) => {
+    tonalPing(ctx, t + i * 0.012, f, 0.55 - i * 0.08, v, 'triangle');
+  });
+  // Add faint octave overtone for shimmer
+  tonalPing(ctx, t + 0.01, 2637, 0.22, 0.04, 'sine');
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// MAIN: playBuySound  –  full vintage cash register sequence
+//
+//  0.00s  mechanical key thud     (low noise burst – the key press)
+//  0.04s  drawer latch click      (mid noise burst – mechanism releases)
+//  0.10s  drawer thud             (low thud – drawer hits the stop)
+//  0.14s  "cha-ching" spring bell (the iconic ring)
+//  0.20s  coin jingle shimmer     (very faint high-freq noise tail)
+// ─────────────────────────────────────────────────────────────────────────────
+function playBuySound() {
+  if (!soundOn) return;
+  try {
+    const ctx = getCtx();
+    const t   = ctx.currentTime;
+
+    // 1 · Key strike – heavy mechanical thud
+    mechClick(ctx, t + 0.00, 220, 0.055, 0.55);
+    mechClick(ctx, t + 0.00, 480, 0.030, 0.30);
+
+    // 2 · Latch click – sharper, higher
+    mechClick(ctx, t + 0.045, 900, 0.022, 0.45);
+    mechClick(ctx, t + 0.048, 1600, 0.012, 0.20);
+
+    // 3 · Drawer thud – low thump as drawer flies open
+    mechClick(ctx, t + 0.10, 140, 0.065, 0.60);
+    mechClick(ctx, t + 0.10, 300, 0.035, 0.25);
+
+    // 4 · CHA-CHING bell ring – the iconic spring
+    springRing(ctx, t + 0.14);
+
+    // 5 · Coin shimmer tail – faint metallic noise fading out
+    const shimBuf  = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * 0.4), ctx.sampleRate);
+    const shimData = shimBuf.getChannelData(0);
+    for (let i = 0; i < shimData.length; i++) shimData[i] = (Math.random() * 2 - 1);
+    const shimSrc = ctx.createBufferSource();
+    shimSrc.buffer = shimBuf;
+    const shimHp  = ctx.createBiquadFilter();
+    shimHp.type            = 'highpass';
+    shimHp.frequency.value = 4000;
+    const shimEnv = ctx.createGain();
+    shimEnv.gain.setValueAtTime(0.06, t + 0.22);
+    shimEnv.gain.exponentialRampToValueAtTime(0.001, t + 0.60);
+    shimSrc.connect(shimHp);
+    shimHp.connect(shimEnv);
+    shimEnv.connect(ctx.destination);
+    shimSrc.start(t + 0.22);
+    shimSrc.stop(t + 0.65);
+
+  } catch(e) { /* silent fail if audio blocked */ }
+}
+
+// Cart add: single soft mechanical click (key tap, no ring)
+function playCartSound() {
+  if (!soundOn) return;
+  try {
+    const ctx = getCtx();
+    const t   = ctx.currentTime;
+    mechClick(ctx, t,        320, 0.025, 0.30);
+    mechClick(ctx, t + 0.01, 700, 0.012, 0.18);
+  } catch(e) {}
+}
+
+function toggleSound(btn) {
+  soundOn = !soundOn;
+  btn.innerHTML = soundOn ? '🔔 Sound' : '🔕 Muted';
+  btn.style.opacity     = soundOn ? '1' : '0.55';
+  btn.style.background  = soundOn
+    ? 'rgba(16,185,129,0.18)'
+    : 'rgba(255,255,255,0.08)';
+  btn.style.borderColor = soundOn
+    ? 'rgba(16,185,129,0.32)'
+    : 'rgba(255,255,255,0.15)';
+  btn.style.color       = soundOn ? '#6EE7B7' : 'rgba(255,255,255,0.5)';
+  if (soundOn) {
+    if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    playBuySound(); // preview on unmute
+  }
+}
+
+// ── SPAWN ─────────────────────────────────────────────────────────────────────
+
+function spawnOne(){
+  if(paused)return;
+  const aSegs=SEGS.filter(s=>activeSegs.has(s.id));
+  if(!aSegs.length)return;
+  const seg=wPick(aSegs);
+  const intType=wInt(), product=rand(PRODUCTS);
+  const {price,items}=adjPrice(product.price, seg.id, intType.id);
+
+  spawnCard(intType, product, seg.id, {price,items});
+  addLog(intType, product, seg.id, {price,items});
+
+  // Update financial state
+  const f=segFinance[seg.id];
+  const now=Date.now();
+
+  if(intType.id==='buy'){
+    f.revenue+=price; f.orders++;
+    global.revenue+=price; global.orders++;
+    rateWin.revenue.push({ts:now,val:price});
+    intCounts.buy++;
+    if(!rateWin.buy)rateWin.buy=[];
+    rateWin.buy.push(now);
+    playBuySound();
+  } else if(intType.id==='cart'){
+    f.cartValue+=price; f.cartCount++; f.cartItems+=items;
+    global.cartValue+=price; global.cartCount++; global.cartItems+=items;
+    rateWin.cartval.push({ts:now,val:price});
+    intCounts.cart++;
+    if(!rateWin.cart)rateWin.cart=[];
+    rateWin.cart.push(now);
+    playCartSound();
+  } else {
+    global.views++;
+    rateWin.view.push(now);
+    intCounts.view++;
+  }
+
+  updateSegFinanceUI(seg.id);
+  updateGlobalUI();
+  updateIntUI();
+  updateRevTable();
+  updateCartDist();
+
+  // Burst
+  if(Math.random()<0.28){
+    setTimeout(()=>{
+      if(paused)return;
+      const aS2=SEGS.filter(s=>activeSegs.has(s.id));if(!aS2.length)return;
+      const s2=wPick(aS2),it2=wInt(),p2=rand(PRODUCTS);
+      const ap2=adjPrice(p2.price,s2.id,it2.id);
+      spawnCard(it2,p2,s2.id,ap2);
+      const f2=segFinance[s2.id],now2=Date.now();
+      if(it2.id==='buy'){f2.revenue+=ap2.price;f2.orders++;global.revenue+=ap2.price;global.orders++;rateWin.revenue.push({ts:now2,val:ap2.price});intCounts.buy++;rateWin.buy.push(now2);}
+      else if(it2.id==='cart'){f2.cartValue+=ap2.price;f2.cartCount++;f2.cartItems+=ap2.items;global.cartValue+=ap2.price;global.cartCount++;global.cartItems+=ap2.items;rateWin.cartval.push({ts:now2,val:ap2.price});intCounts.cart++;rateWin.cart.push(now2);}
+      else{global.views++;rateWin.view.push(now2);intCounts.view++;}
+      updateSegFinanceUI(s2.id);updateGlobalUI();updateIntUI();updateRevTable();updateCartDist();
+    },spawnMs*0.38);
+  }
+}
+
+function startLoop(){clearInterval(spawnTimer);spawnTimer=setInterval(spawnOne,spawnMs);}
+
+function setSpeed(ms,btn){spawnMs=ms;startLoop();document.querySelectorAll('.spd-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
+function togglePause(){paused=!paused;document.getElementById('pauseBtn').textContent=paused?'▶ Resume':'⏸ Pause';}
+
+// Init
+updateSegUI(); updatePills(); updateRevTable(); updateCartDist(); updateGlobalUI();
+
+// Unlock AudioContext on first user interaction (browser requirement)
+document.addEventListener('click', function unlockAudio() {
+  getCtx(); // create context
+  if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+  document.removeEventListener('click', unlockAudio);
+}, { once: true });
+
+[350,750,1150,1650,2100].forEach(t=>setTimeout(()=>{if(!paused)spawnOne();},t));
+startLoop();
+setInterval(updateSegUI,3000);
+</script>
+</body>
+</html>
