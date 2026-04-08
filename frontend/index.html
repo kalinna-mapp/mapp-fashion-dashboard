@@ -77,7 +77,7 @@ main { max-width: 1400px; margin: 0 auto; padding: 26px 36px 60px; position: rel
   background: var(--bg-card);
   border-radius: 14px;
   border: 1px solid var(--border);
-  padding: 16px 18px;
+  padding: 12px 16px;
   box-shadow: 0 2px 12px rgba(45,42,94,0.06);
   position: relative; overflow: hidden;
 }
@@ -107,7 +107,7 @@ main { max-width: 1400px; margin: 0 auto; padding: 26px 36px 60px; position: rel
 
 .seg-card {
   background: var(--bg-card); border-radius: 16px; border: 2px solid rgba(123,111,232,0.09);
-  padding: 16px 18px 14px; box-shadow: 0 2px 14px rgba(45,42,94,0.07);
+  padding: 12px 16px 10px; box-shadow: 0 2px 14px rgba(45,42,94,0.07);
   cursor: pointer; transition: all 0.22s; position: relative; overflow: hidden; user-select: none;
 }
 .seg-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; border-radius: 16px 16px 0 0; }
@@ -140,7 +140,7 @@ main { max-width: 1400px; margin: 0 auto; padding: 26px 36px 60px; position: rel
 .seg-name { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 2px; }
 
 /* Visitors row */
-.seg-visitors { font-family: var(--font-display); font-size: 30px; line-height: 1; }
+.seg-visitors { font-family: var(--font-display); font-size: 24px; line-height: 1; }
 .seg-card.none     .seg-visitors { color: var(--seg-none); }
 .seg-card.once     .seg-visitors { color: var(--seg-once); }
 .seg-card.loyal    .seg-visitors { color: var(--seg-loyal); }
@@ -229,33 +229,33 @@ main { max-width: 1400px; margin: 0 auto; padding: 26px 36px 60px; position: rel
 .sdl-dot  { width: 9px; height: 9px; border-radius: 50%; box-shadow: 0 0 0 2px white; flex-shrink: 0; }
 
 .lanes { padding: 12px 0 16px; display: flex; flex-direction: column; gap: 8px; }
-.lane { position: relative; height: 68px; overflow: hidden; display: flex; align-items: center; }
-.lane-lbl { width: 118px; flex-shrink: 0; padding: 0 14px 0 22px; font-size: 10.5px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; display: flex; align-items: center; gap: 6px; z-index: 2; background: var(--bg-card); }
+.lane { position: relative; height: 90px; overflow: hidden; display: flex; align-items: center; }
+.lane-lbl { width: 110px; flex-shrink: 0; padding: 0 14px 0 22px; font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; display: flex; align-items: center; gap: 6px; z-index: 4; background: var(--bg-card); }
 .ldot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 .ldot.view { background: var(--violet); }
 .ldot.cart { background: var(--pink); }
 .ldot.buy  { background: var(--green); }
-.lane::before, .lane::after { content: ''; position: absolute; top: 0; bottom: 0; width: 55px; z-index: 3; pointer-events: none; }
+.lane::before, .lane::after { content: ''; position: absolute; top: 0; bottom: 0; width: 60px; z-index: 3; pointer-events: none; }
 .lane::before { left: 118px; background: linear-gradient(to right, var(--bg-card), transparent); }
 .lane::after  { right: 0;    background: linear-gradient(to left,  var(--bg-card), transparent); }
 .lane-track { position: absolute; left: 134px; right: 14px; top: 50%; transform: translateY(-50%); height: 1px; background: repeating-linear-gradient(to right, var(--border) 0, var(--border) 6px, transparent 6px, transparent 14px); }
 
 /* PRODUCT CARD */
-.pcard { position: absolute; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 7px; padding: 6px 10px 6px 8px; border-radius: 10px; white-space: nowrap; box-shadow: 0 3px 12px rgba(45,42,94,0.13); animation: ride linear forwards; will-change: transform, opacity; z-index: 2; border: 1px solid transparent; }
+.pcard { position: absolute; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 9px; padding: 9px 14px 9px 11px; border-radius: 12px; white-space: nowrap; box-shadow: 0 4px 16px rgba(45,42,94,0.15); animation: ride linear forwards; will-change: transform, opacity; z-index: 2; border: 1px solid transparent; }
 .pcard.view { background: var(--violet-pale); border-color: rgba(123,111,232,0.2); }
 .pcard.cart { background: var(--pink-pale);   border-color: rgba(236,72,153,0.2); }
 .pcard.buy  { background: var(--green-pale);  border-color: rgba(16,185,129,0.2); animation: ride linear forwards, buyFlash 0.65s ease 0.05s; }
 @keyframes ride { 0%{opacity:0;transform:translateY(-50%) translateX(0)} 5%{opacity:1} 92%{opacity:1} 100%{opacity:0;transform:translateY(-50%) translateX(var(--travel))} }
 @keyframes buyFlash { 0%{box-shadow:0 0 0 0 rgba(16,185,129,0.55)} 50%{box-shadow:0 0 0 10px rgba(16,185,129,0)} 100%{box-shadow:0 3px 12px rgba(45,42,94,0.13)} }
-.pcard-emoji { font-size: 15px; line-height: 1; }
-.pcard-name { font-size: 11px; font-weight: 600; color: var(--text-dark); max-width: 115px; overflow: hidden; text-overflow: ellipsis; }
-.pcard-meta { font-size: 9.5px; color: var(--text-muted); margin-top: 1px; }
-.pcard-seg  { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 0 2px white; margin: 0 1px; }
-.ptag { font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 5px; text-transform: uppercase; flex-shrink: 0; }
+.pcard-emoji { font-size: 20px; line-height: 1; }
+.pcard-name { font-size: 13px; font-weight: 600; color: var(--text-dark); max-width: 150px; overflow: hidden; text-overflow: ellipsis; }
+.pcard-meta { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.pcard-seg  { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 0 2px white; margin: 0 1px; }
+.ptag { font-size: 10px; font-weight: 700; padding: 3px 7px; border-radius: 6px; text-transform: uppercase; flex-shrink: 0; }
 .ptag.view { background: var(--violet); color: white; }
 .ptag.cart { background: var(--pink);   color: white; }
 .ptag.buy  { background: var(--green);  color: white; }
-.pprice { font-size: 10.5px; font-weight: 700; flex-shrink: 0; }
+.pprice { font-size: 13px; font-weight: 700; flex-shrink: 0; }
 .pprice.buy  { color: var(--green); }
 .pprice.cart { color: var(--pink); }
 .pprice.view { color: var(--text-muted); }
@@ -349,7 +349,592 @@ main { max-width: 1400px; margin: 0 auto; padding: 26px 36px 60px; position: rel
 /* Flash animation for values updating */
 @keyframes flashUp { 0%{opacity:0.4;transform:scale(0.95)}100%{opacity:1;transform:scale(1)} }
 .flash { animation: flashUp 0.3s ease; }
+
+/* ── RISK TRAFFIC LIGHT ── */
+.risk-strip {
+  background: var(--bg-card); border-radius: 16px;
+  border: 1px solid var(--border); margin-bottom: 16px;
+  padding: 12px 18px;
+  display: flex; align-items: center; gap: 16px;
+  height: 56px; flex-shrink: 0;
+}
+.risk-strip-label {
+  font-size: 10.5px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--text-muted); flex-shrink: 0;
+}
+.risk-lights { display: flex; gap: 10px; flex: 1; }
+.risk-light {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 12px; border-radius: 10px; flex: 1;
+  border: 1px solid transparent; transition: background 0.4s, border-color 0.4s;
+  min-width: 0; overflow: hidden;
+}
+.risk-light.inactive { background: var(--bg); border-color: transparent; }
+.risk-light.active-red    { background: #FEF2F2; border-color: #FECACA; }
+.risk-light.active-amber  { background: #FFFBEB; border-color: #FDE68A; }
+.risk-light.active-green  { background: #F0FDF4; border-color: #BBF7D0; }
+.risk-dot {
+  width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+  transition: background 0.4s;
+}
+.risk-dot.red   { background: #EF4444; }
+.risk-dot.amber { background: #F59E0B; }
+.risk-dot.green { background: #10B981; }
+.risk-dot.off   { background: #D1D5DB; }
+.risk-light-text { min-width: 0; overflow: hidden; }
+.risk-light-title {
+  font-size: 11px; font-weight: 700; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis;
+}
+.risk-light-title.red   { color: #991B1B; }
+.risk-light-title.amber { color: #92400E; }
+.risk-light-title.green { color: #065F46; }
+.risk-light-title.off   { color: var(--text-muted); }
+.risk-light-sub {
+  font-size: 10px; color: var(--text-muted); white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis;
+}
+.risk-avg {
+  font-size: 11px; color: var(--text-muted); flex-shrink: 0;
+  white-space: nowrap;
+}
+@keyframes riskPulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+.risk-dot.red.pulse { animation: riskPulse 1.5s ease-in-out infinite; }
+
+/* ── RISK BADGE ON CARDS ── */
+.risk-badge {
+  position: absolute; top: 2px; right: 2px;
+  font-size: 9px; font-weight: 700; padding: 1px 5px;
+  border-radius: 5px; line-height: 1.4; pointer-events: none;
+}
+.risk-badge.high   { background: #FEE2E2; color: #991B1B; }
+.risk-badge.medium { background: #FEF3C7; color: #92400E; }
+.risk-badge.low    { background: #DBEAFE; color: #1E40AF; }
+
+/* ── MI BASELINE TAB ── */
+.mi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.mi-card { background: var(--bg-card); border-radius: 18px; border: 1px solid var(--border);
+  overflow: hidden; box-shadow: 0 4px 20px rgba(45,42,94,0.07); }
+.mi-hdr  { padding: 13px 18px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between; }
+.mi-title { font-size: 13px; font-weight: 600; color: var(--text-dark); }
+.mi-sub   { font-size: 10.5px; color: var(--text-muted); margin-top: 1px; }
+.mi-body  { padding: 8px 0; }
+.mi-row {
+  display: grid; grid-template-columns: 160px 60px 1fr 70px 60px;
+  gap: 8px; align-items: center; padding: 7px 16px;
+  border-bottom: 1px solid rgba(123,111,232,0.05); font-size: 11.5px;
+}
+.mi-row:last-child { border-bottom: none; }
+.mi-row.hdr { font-size: 9.5px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.07em; color: var(--text-muted); padding-bottom: 6px; }
+.mi-key     { font-weight: 500; color: var(--text-dark); overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap; }
+.mi-rate    { font-weight: 700; text-align: right; }
+.mi-bar-wrap{ height: 5px; background: var(--bg); border-radius: 3px; overflow: hidden; }
+.mi-bar     { height: 100%; border-radius: 3px; transition: width 0.6s; }
+.mi-rev     { font-size: 11px; color: var(--text-muted); text-align: right; }
+.mi-orders  { font-size: 11px; color: var(--text-muted); text-align: right; }
+.mi-kpis    { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 16px; }
+.mi-kpi     { background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border);
+  padding: 14px 16px; position: relative; overflow: hidden; }
+.mi-kpi::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; border-radius:12px 12px 0 0; }
+.mi-kpi.c1::before{background:var(--violet)} .mi-kpi.c2::before{background:#EF4444}
+.mi-kpi.c3::before{background:var(--green)}  .mi-kpi.c4::before{background:var(--amber)}
+.mi-kpi-label { font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:5px; }
+.mi-kpi-value { font-family:var(--font-display);font-size:26px;line-height:1;color:var(--text-dark); }
+.mi-kpi-sub   { font-size:10px;color:var(--text-muted);margin-top:4px; }
+
+/* ── TAB NAVIGATION ── */
+.tab-nav { display:flex;gap:4px;background:rgba(255,255,255,0.6);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:20px;padding:5px;width:fit-content;margin-bottom:24px; }
+.tab-btn { padding:8px 22px;border-radius:16px;border:none;background:transparent;color:var(--text-mid);font-family:var(--font-body);font-size:13.5px;font-weight:500;cursor:pointer;transition:all 0.2s;white-space:nowrap; }
+.tab-btn:hover { color:var(--violet); }
+.tab-btn.active { background:var(--navy);color:var(--text-on-dark);box-shadow:0 2px 12px rgba(45,42,94,0.28); }
+.tab-panel { display:none; }
+.tab-panel.active { display:block; }
+
+/* ── COLLECTION FILTER BAR ── */
+.coll-filter-bar { display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:22px; }
+.coll-filter-group { display:flex;align-items:center;gap:5px;background:rgba(255,255,255,0.7);border:1px solid var(--border);border-radius:10px;padding:5px 6px; }
+.coll-filter-label { font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);padding:0 4px; }
+.coll-btn { padding:5px 13px;border-radius:8px;border:none;background:transparent;color:var(--text-mid);font-family:var(--font-body);font-size:12px;font-weight:500;cursor:pointer;transition:all 0.18s;white-space:nowrap; }
+.coll-btn:hover { color:var(--violet); }
+.coll-btn.active { background:var(--violet);color:white; }
+.coll-btn.hw.active { background:var(--pink); }
+
+/* ── COLLECTION KPIs ── */
+.coll-kpis { display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px; }
+.coll-kpi { background:var(--bg-card);border-radius:12px;border:1px solid var(--border);padding:14px 16px;box-shadow:0 2px 10px rgba(45,42,94,0.05);position:relative;overflow:hidden; }
+.coll-kpi::before { content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:12px 12px 0 0; }
+.coll-kpi.c1::before{background:var(--violet)} .coll-kpi.c2::before{background:var(--pink)} .coll-kpi.c3::before{background:var(--green)} .coll-kpi.c4::before{background:var(--amber)} .coll-kpi.c5::before{background:linear-gradient(90deg,var(--violet),var(--pink))}
+.coll-kpi-label { font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:5px; }
+.coll-kpi-value { font-family:var(--font-display);font-size:26px;line-height:1;color:var(--text-dark); }
+.coll-kpi-sub { font-size:10px;color:var(--text-muted);margin-top:4px; }
+
+/* ── ATTRIBUTE PANELS ── */
+.attr-grid { display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px; }
+.attr-card { background:var(--bg-card);border-radius:18px;border:1px solid var(--border);overflow:hidden;box-shadow:0 4px 20px rgba(45,42,94,0.07); }
+.attr-hdr { padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between; }
+.attr-title { font-size:13px;font-weight:600;color:var(--text-dark); }
+.attr-sub { font-size:10.5px;color:var(--text-muted);margin-top:1px; }
+.attr-body { padding:14px 18px; }
+
+.attr-row { display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid rgba(123,111,232,0.05); }
+.attr-row:last-child { border-bottom:none; }
+.attr-name { font-size:11.5px;font-weight:500;color:var(--text-dark);width:130px;flex-shrink:0; }
+.attr-bar-wrap { flex:1;height:6px;background:var(--bg);border-radius:3px;overflow:hidden; }
+.attr-bar { height:100%;border-radius:3px;transition:width 0.6s ease; }
+.attr-val { font-size:11px;font-weight:700;color:var(--text-dark);width:32px;text-align:right;flex-shrink:0; }
+.attr-delta { font-size:10px;font-weight:600;padding:1px 6px;border-radius:8px;flex-shrink:0; }
+.attr-delta.up{background:#D1FAE5;color:#065F46} .attr-delta.down{background:#FEE2E2;color:#991B1B} .attr-delta.flat{background:var(--bg);color:var(--text-muted)}
+
+.coll-chips { display:flex;gap:4px;margin-top:4px; }
+.coll-chip { font-size:9px;font-weight:700;padding:1px 6px;border-radius:6px; }
+.coll-chip.fw{background:var(--violet-pale);color:var(--violet)} .coll-chip.hw{background:var(--pink-pale);color:var(--pink)} .coll-chip.prem{background:#FEF3C7;color:#92400E} .coll-chip.basic{background:var(--bg);color:var(--text-muted)} .coll-chip.caps{background:var(--green-pale);color:var(--green)}
+
+.trend-mini { display:flex;align-items:flex-end;gap:2px;height:24px;margin-left:auto;flex-shrink:0; }
+.trend-bar { width:4px;border-radius:2px 2px 0 0;background:var(--violet);opacity:0.35;transition:height 0.4s;min-height:2px; }
+.trend-bar.hi { opacity:1; }
+
+/* ── COLLECTION COMPARE ── */
+.coll-compare { display:grid;grid-template-columns:1fr 1fr;gap:16px; }
+.compare-card { background:var(--bg-card);border-radius:18px;border:1px solid var(--border);overflow:hidden;box-shadow:0 4px 20px rgba(45,42,94,0.07); }
+.compare-hdr { padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between; }
+.compare-title { font-size:13px;font-weight:600; }
+.compare-body { padding:14px 18px; }
+.compare-row { display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(123,111,232,0.05);font-size:12px; }
+.compare-row:last-child { border-bottom:none; }
+.compare-name { flex:1;color:var(--text-dark);font-weight:500; }
+.compare-fw { width:44px;text-align:right;font-weight:700;color:var(--violet); }
+.compare-hw { width:44px;text-align:right;font-weight:700;color:var(--pink); }
+.compare-diff { font-size:10px;font-weight:700;padding:1px 6px;border-radius:8px; }
+.compare-diff.up{background:#D1FAE5;color:#065F46} .compare-diff.down{background:#FEE2E2;color:#991B1B}
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.filter-group {
+  display: flex;
+  gap: 4px;
+  background: rgba(255,255,255,0.7);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 4px;
+}
+
+.filter-btn {
+  padding: 6px 14px;
+  border-radius: calc(var(--radius-sm) - 2px);
+  border: none;
+  background: transparent;
+  color: var(--text-mid);
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+}
+
+.filter-btn:hover { color: var(--violet); }
+
+.filter-btn.active {
+  background: var(--violet);
+  color: white;
+}
+
+/* Season Toggle */
+.season-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.7);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 4px;
+}
+
+.season-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 0 6px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.season-btn {
+  padding: 6px 14px;
+  border-radius: calc(var(--radius-sm) - 2px);
+  border: none;
+  background: transparent;
+  color: var(--text-mid);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.season-btn.fw.active { background: var(--violet); color: white; }
+.season-btn.hw.active { background: var(--pink); color: white; }
+
+.season-year {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  color: var(--text-dark);
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+/* ── KPI CARDS ── */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.kpi-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: 22px 24px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+
+.kpi-card.violet::before { background: var(--violet); }
+.kpi-card.pink::before   { background: var(--pink); }
+.kpi-card.navy::before   { background: var(--navy); }
+.kpi-card.mixed::before  { background: linear-gradient(90deg, var(--violet), var(--pink)); }
+
+.kpi-label {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 10px;
+}
+
+.kpi-value {
+  font-family: var(--font-display);
+  font-size: 32px;
+  color: var(--text-dark);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.kpi-delta {
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+.kpi-delta.up   { background: #D1FAE5; color: #065F46; }
+.kpi-delta.down { background: #FEE2E2; color: #991B1B; }
+
+.kpi-sub {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* ── CHART GRID ── */
+.chart-grid {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.chart-grid.cols-2 { grid-template-columns: 2fr 1fr; }
+.chart-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+.chart-grid.cols-equal { grid-template-columns: 1fr 1fr; }
+
+.chart-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.chart-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.chart-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 2px;
+}
+
+.chart-subtitle {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.chart-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.chart-badge.violet { background: var(--violet-pale); color: var(--violet); }
+.chart-badge.pink   { background: var(--pink-pale);   color: var(--pink); }
+.chart-badge.live   {
+  background: #D1FAE5; color: #065F46;
+  display: flex; align-items: center; gap: 5px;
+}
+
+.live-dot {
+  width: 6px; height: 6px;
+  background: #10B981;
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.3); }
+}
+
+.chart-wrap { position: relative; }
+
+/* ── TABLE ── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.data-table th {
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.data-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(123,111,232,0.06);
+  color: var(--text-dark);
+  vertical-align: middle;
+}
+
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { background: var(--violet-pale); }
+
+.rank-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.rank-badge.top { background: var(--navy); color: white; }
+.rank-badge.mid { background: var(--violet-pale); color: var(--violet); }
+
+.bar-mini {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--violet);
+  transition: width 0.5s ease;
+}
+
+/* ── REALTIME SPECIFIC ── */
+.realtime-counter {
+  font-family: var(--font-display);
+  font-size: 64px;
+  color: var(--violet);
+  line-height: 1;
+  margin: 12px 0 8px;
+  transition: all 0.3s ease;
+}
+
+.realtime-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.pulse-ring {
+  display: inline-block;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--violet);
+  position: relative;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.pulse-ring::after {
+  content: '';
+  position: absolute;
+  top: -4px; left: -4px;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--violet);
+  animation: ripple 1.5s infinite;
+}
+
+@keyframes ripple {
+  0%   { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
+/* ── SECTION DIVIDER ── */
+.section-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── PRODUCT CATEGORY BAR ── */
+.cat-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(123,111,232,0.06);
+}
+
+.cat-row:last-child { border-bottom: none; }
+
+.cat-name {
+  font-size: 13px;
+  color: var(--text-dark);
+  width: 110px;
+  flex-shrink: 0;
+}
+
+.cat-bar-wrap {
+  flex: 1;
+  height: 6px;
+  background: var(--bg);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.cat-bar {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+
+.cat-value {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-dark);
+  width: 60px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ── SEGMENT CHIP ── */
+.segment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.segment-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.segment-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.segment-name {
+  flex: 1;
+  margin: 0 10px;
+  color: var(--text-dark);
+}
+
+.segment-pct {
+  font-weight: 600;
+  color: var(--text-mid);
+}
+
+/* ── GEO TABLE ── */
+.flag { font-size: 16px; margin-right: 6px; }
+
+/* ── HIDDEN TABS ── */
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ── COMPARISON BADGE ── */
+.compare-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 8px;
+}
+.compare-badge.up   { background: #D1FAE5; color: #065F46; }
+.compare-badge.down { background: #FEE2E2; color: #991B1B; }
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 </head>
 <body>
 
@@ -373,7 +958,51 @@ main { max-width: 1400px; margin: 0 auto; padding: 26px 36px 60px; position: rel
 
 <main>
 
+  <!-- TAB NAVIGATION -->
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('stream',this)">⬤ Live Stream</button>
+    <button class="tab-btn" onclick="switchTab('historical',this)">📈 Historical</button>
+    <button class="tab-btn" onclick="switchTab('ecommerce',this)">🛍 E-Commerce</button>
+    <button class="tab-btn" onclick="switchTab('collection',this)">✦ Contextual Attributes</button>
+    <button class="tab-btn" onclick="switchTab('mi',this)">◈ MI Baseline</button>
+  </div>
+
+  <!-- ═══════════════ TAB 1: LIVE STREAM ═══════════════ -->
+  <div id="tab-stream" class="tab-panel active">
+
   <!-- GLOBAL KPI STRIP -->
+  <!-- ── RISK TRAFFIC LIGHT ── -->
+  <div class="risk-strip">
+    <span class="risk-strip-label">⚠ Return Risk</span>
+    <div class="risk-lights">
+      <!-- Red: High risk -->
+      <div class="risk-light inactive" id="rl-red">
+        <div class="risk-dot off" id="rl-red-dot"></div>
+        <div class="risk-light-text">
+          <div class="risk-light-title off" id="rl-red-title">High Risk</div>
+          <div class="risk-light-sub" id="rl-red-sub">no events yet</div>
+        </div>
+      </div>
+      <!-- Amber: Medium risk -->
+      <div class="risk-light inactive" id="rl-amber">
+        <div class="risk-dot off" id="rl-amber-dot"></div>
+        <div class="risk-light-text">
+          <div class="risk-light-title off" id="rl-amber-title">Medium Risk</div>
+          <div class="risk-light-sub" id="rl-amber-sub">no events yet</div>
+        </div>
+      </div>
+      <!-- Green: Low/OK -->
+      <div class="risk-light inactive" id="rl-green">
+        <div class="risk-dot off" id="rl-green-dot"></div>
+        <div class="risk-light-text">
+          <div class="risk-light-title off" id="rl-green-title">Low Risk</div>
+          <div class="risk-light-sub" id="rl-green-sub">no events yet</div>
+        </div>
+      </div>
+    </div>
+    <span class="risk-avg">Ø <strong id="riskAvgRate">—</strong> return rate · <span id="riskStripSub" style="font-size:10px">Loading MI...</span></span>
+  </div>
+
   <div class="global-kpis">
     <div class="gkpi revenue">
       <div class="gkpi-label">Total Revenue</div>
@@ -600,6 +1229,523 @@ main { max-width: 1400px; margin: 0 auto; padding: 26px 36px 60px; position: rel
     </div>
 
   </div>
+
+  </div><!-- end tab-stream -->
+
+  <!-- ═══════════════ TAB 2: HISTORICAL ═══════════════ -->
+  <div id="tab-historical" class="tab-panel">
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <div class="filter-group">
+        <button class="filter-btn" onclick="setFilter(this, 'hist')">Heute</button>
+        <button class="filter-btn" onclick="setFilter(this, 'hist')">Gestern</button>
+        <button class="filter-btn active" onclick="setFilter(this, 'hist')">7 Tage</button>
+        <button class="filter-btn" onclick="setFilter(this, 'hist')">30 Tage</button>
+        <button class="filter-btn" onclick="setFilter(this, 'hist')">Individuell</button>
+      </div>
+
+      <div class="season-toggle">
+        <span class="season-label">Saison</span>
+        <button class="season-btn fw active" onclick="setSeason('fw', this)">FW</button>
+        <button class="season-btn hw" onclick="setSeason('hw', this)">HW</button>
+        <select class="season-year">
+          <option>2025</option><option>2024</option><option>2023</option>
+        </select>
+      </div>
+
+      <div style="font-size:12px;color:var(--text-muted);padding:0 4px;">
+        <span style="color:var(--violet);font-weight:600">Frühjahr/Sommer</span> · Feb – Jul 2025
+      </div>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card violet">
+        <div class="kpi-label">Besuche gesamt</div>
+        <div class="kpi-value">284.712</div>
+        <div class="kpi-delta up">▲ +8,4%</div>
+        <div class="kpi-sub">vs. HW 2024</div>
+      </div>
+      <div class="kpi-card pink">
+        <div class="kpi-label">Page Impressions</div>
+        <div class="kpi-value">1,24M</div>
+        <div class="kpi-delta up">▲ +11,2%</div>
+        <div class="kpi-sub">vs. HW 2024</div>
+      </div>
+      <div class="kpi-card navy">
+        <div class="kpi-label">Neue Nutzer</div>
+        <div class="kpi-value">108.340</div>
+        <div class="kpi-delta down">▼ -2,1%</div>
+        <div class="kpi-sub">vs. HW 2024</div>
+      </div>
+      <div class="kpi-card mixed">
+        <div class="kpi-label">Ø Sitzungsdauer</div>
+        <div class="kpi-value">3:58</div>
+        <div class="kpi-delta up">▲ +0:22</div>
+        <div class="kpi-sub">vs. HW 2024</div>
+      </div>
+    </div>
+
+    <div class="chart-grid cols-2">
+      <!-- Traffic Trend -->
+      <div class="chart-card">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">Traffic-Verlauf · FW 2025 vs. HW 2024</div>
+            <div class="chart-subtitle">Besuche täglich</div>
+          </div>
+          <span class="chart-badge violet">FW 2025</span>
+        </div>
+        <div class="chart-wrap" style="height:240px">
+          <canvas id="trendChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Top Pages Bar -->
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="chart-title">Top-Seiten im Zeitraum</div>
+          <span class="chart-badge pink">7 Tage</span>
+        </div>
+        <div class="chart-wrap" style="height:240px">
+          <canvas id="topPagesChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Browser Distribution -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div class="chart-title">Browser-Verteilung</div>
+        <div class="chart-subtitle">alle Nutzer im Zeitraum</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:4px">
+        <div style="text-align:center;padding:16px 8px;background:var(--bg);border-radius:var(--radius-sm)">
+          <div style="font-size:22px;margin-bottom:6px">🌐</div>
+          <div style="font-size:20px;font-weight:600;color:var(--violet)">47%</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Chrome</div>
+        </div>
+        <div style="text-align:center;padding:16px 8px;background:var(--bg);border-radius:var(--radius-sm)">
+          <div style="font-size:22px;margin-bottom:6px">🦊</div>
+          <div style="font-size:20px;font-weight:600;color:var(--violet)">19%</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Firefox</div>
+        </div>
+        <div style="text-align:center;padding:16px 8px;background:var(--bg);border-radius:var(--radius-sm)">
+          <div style="font-size:22px;margin-bottom:6px">🧭</div>
+          <div style="font-size:20px;font-weight:600;color:var(--violet)">18%</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Safari</div>
+        </div>
+        <div style="text-align:center;padding:16px 8px;background:var(--bg);border-radius:var(--radius-sm)">
+          <div style="font-size:22px;margin-bottom:6px">🔷</div>
+          <div style="font-size:20px;font-weight:600;color:var(--violet)">12%</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Edge</div>
+        </div>
+        <div style="text-align:center;padding:16px 8px;background:var(--bg);border-radius:var(--radius-sm)">
+          <div style="font-size:22px;margin-bottom:6px">⬜</div>
+          <div style="font-size:20px;font-weight:600;color:var(--text-muted)">4%</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Sonstige</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       TAB 3: E-COMMERCE
+  ═══════════════════════════════════════════ -->
+  
+
+  <!-- ═══════════════ TAB 3: E-COMMERCE ═══════════════ -->
+  <div id="tab-ecommerce" class="tab-panel">
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <div class="filter-group">
+        <button class="filter-btn" onclick="setFilter(this, 'eco')">Heute</button>
+        <button class="filter-btn" onclick="setFilter(this, 'eco')">7 Tage</button>
+        <button class="filter-btn active" onclick="setFilter(this, 'eco')">30 Tage</button>
+        <button class="filter-btn" onclick="setFilter(this, 'eco')">Saison</button>
+      </div>
+      <div class="season-toggle">
+        <span class="season-label">Saison</span>
+        <button class="season-btn fw active" onclick="setSeason2('fw', this)">FW</button>
+        <button class="season-btn hw" onclick="setSeason2('hw', this)">HW</button>
+        <select class="season-year"><option>2025</option><option>2024</option></select>
+      </div>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card violet">
+        <div class="kpi-label">Umsatz</div>
+        <div class="kpi-value">€ 842K</div>
+        <div class="kpi-delta up">▲ +14,6%</div>
+        <div class="kpi-sub">vs. FW 2024</div>
+      </div>
+      <div class="kpi-card pink">
+        <div class="kpi-label">Bestellungen</div>
+        <div class="kpi-value">12.847</div>
+        <div class="kpi-delta up">▲ +9,3%</div>
+        <div class="kpi-sub">vs. FW 2024</div>
+      </div>
+      <div class="kpi-card navy">
+        <div class="kpi-label">Conversion Rate</div>
+        <div class="kpi-value">3,82%</div>
+        <div class="kpi-delta up">▲ +0,4pp</div>
+        <div class="kpi-sub">vs. FW 2024</div>
+      </div>
+      <div class="kpi-card mixed">
+        <div class="kpi-label">Ø Bestellwert</div>
+        <div class="kpi-value">€ 65,50</div>
+        <div class="kpi-delta down">▼ -€2,10</div>
+        <div class="kpi-sub">vs. FW 2024</div>
+      </div>
+    </div>
+
+    <div class="chart-grid cols-2">
+      <!-- Revenue Trend -->
+      <div class="chart-card">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">Umsatz-Verlauf</div>
+            <div class="chart-subtitle">FW 2025 vs. FW 2024</div>
+          </div>
+          <span class="chart-badge violet">30 Tage</span>
+        </div>
+        <div class="chart-wrap" style="height:220px">
+          <canvas id="revenueChart"></canvas>
+        </div>
+      </div>
+
+      <!-- User Segments Donut -->
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="chart-title">Nutzer-Segmente</div>
+          <span class="chart-badge pink">kaufend</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:center">
+          <div class="chart-wrap" style="height:160px">
+            <canvas id="segmentChart"></canvas>
+          </div>
+          <div class="segment-list">
+            <div class="segment-item">
+              <div class="segment-dot" style="background:var(--violet)"></div>
+              <span class="segment-name">Bestandskunden</span>
+              <span class="segment-pct">47%</span>
+            </div>
+            <div class="segment-item">
+              <div class="segment-dot" style="background:var(--pink)"></div>
+              <span class="segment-name">Neukunden</span>
+              <span class="segment-pct">31%</span>
+            </div>
+            <div class="segment-item">
+              <div class="segment-dot" style="background:var(--navy)"></div>
+              <span class="segment-name">Reaktivierte</span>
+              <span class="segment-pct">14%</span>
+            </div>
+            <div class="segment-item">
+              <div class="segment-dot" style="background:#D1D5DB"></div>
+              <span class="segment-name">Abbrecher</span>
+              <span class="segment-pct">8%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Categories -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div class="chart-title">Produktkategorien nach Umsatz</div>
+        <span class="chart-badge violet">FW 2025</span>
+      </div>
+      <div style="margin-top:8px">
+        <div class="cat-row">
+          <span class="cat-name">Kleider</span>
+          <div class="cat-bar-wrap"><div class="cat-bar" style="width:100%;background:var(--violet)"></div></div>
+          <span class="cat-value">€ 248K</span>
+          <span class="compare-badge up">▲ +18%</span>
+        </div>
+        <div class="cat-row">
+          <span class="cat-name">Schuhe</span>
+          <div class="cat-bar-wrap"><div class="cat-bar" style="width:76%;background:var(--violet-light)"></div></div>
+          <span class="cat-value">€ 189K</span>
+          <span class="compare-badge up">▲ +12%</span>
+        </div>
+        <div class="cat-row">
+          <span class="cat-name">Jacken</span>
+          <div class="cat-bar-wrap"><div class="cat-bar" style="width:58%;background:var(--pink)"></div></div>
+          <span class="cat-value">€ 144K</span>
+          <span class="compare-badge down">▼ -4%</span>
+        </div>
+        <div class="cat-row">
+          <span class="cat-name">Accessoires</span>
+          <div class="cat-bar-wrap"><div class="cat-bar" style="width:47%;background:var(--pink-light)"></div></div>
+          <span class="cat-value">€ 117K</span>
+          <span class="compare-badge up">▲ +21%</span>
+        </div>
+        <div class="cat-row">
+          <span class="cat-name">Hosen</span>
+          <div class="cat-bar-wrap"><div class="cat-bar" style="width:37%;background:var(--navy)"></div></div>
+          <span class="cat-value">€ 91K</span>
+          <span class="compare-badge up">▲ +7%</span>
+        </div>
+        <div class="cat-row">
+          <span class="cat-name">Wäsche</span>
+          <div class="cat-bar-wrap"><div class="cat-bar" style="width:22%;background:#C4B5FD"></div></div>
+          <span class="cat-value">€ 53K</span>
+          <span class="compare-badge down">▼ -2%</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end ecommerce tab -->
+
+
+
+  <!-- ═══════════════ TAB 4: CONTEXTUAL ATTRIBUTES ═══════════════ -->
+  <div id="tab-collection" class="tab-panel">
+
+    <!-- COLLECTION FILTER BAR -->
+    <div class="coll-filter-bar">
+      <div class="coll-filter-group">
+        <span class="coll-filter-label">Season</span>
+        <button class="coll-btn fw active" onclick="setColl('season','fw',this)">FW</button>
+        <button class="coll-btn hw"        onclick="setColl('season','hw',this)">HW</button>
+        <button class="coll-btn"           onclick="setColl('season','all',this)">All</button>
+      </div>
+      <div class="coll-filter-group">
+        <span class="coll-filter-label">Year</span>
+        <button class="coll-btn active" onclick="setColl('year','2025',this)">2025</button>
+        <button class="coll-btn"        onclick="setColl('year','2024',this)">2024</button>
+        <button class="coll-btn"        onclick="setColl('year','2023',this)">2023</button>
+      </div>
+      <div class="coll-filter-group">
+        <span class="coll-filter-label">Line</span>
+        <button class="coll-btn active" onclick="setColl('line','all',this)">All Lines</button>
+        <button class="coll-btn"        onclick="setColl('line','premium',this)">Premium</button>
+        <button class="coll-btn"        onclick="setColl('line','basics',this)">Basics</button>
+        <button class="coll-btn"        onclick="setColl('line','capsule',this)">Capsule</button>
+      </div>
+      <div class="coll-filter-group">
+        <span class="coll-filter-label">Collection</span>
+        <button class="coll-btn active" onclick="setColl('name','all',this)">All</button>
+        <button class="coll-btn"        onclick="setColl('name','summer-breeze',this)">Summer Breeze</button>
+        <button class="coll-btn"        onclick="setColl('name','urban-edit',this)">Urban Edit</button>
+        <button class="coll-btn"        onclick="setColl('name','resort-24',this)">Resort '24</button>
+        <button class="coll-btn"        onclick="setColl('name','noir',this)">Noir</button>
+      </div>
+    </div>
+
+    <!-- COLLECTION KPIs -->
+    <div class="coll-kpis">
+      <div class="coll-kpi c1">
+        <div class="coll-kpi-label">Active Collection</div>
+        <div class="coll-kpi-value" id="ck-name" style="font-size:18px;margin-top:3px">FW 2025</div>
+        <div class="coll-kpi-sub" id="ck-range">Feb – Jul · All Lines</div>
+      </div>
+      <div class="coll-kpi c2">
+        <div class="coll-kpi-label">Products Interacted</div>
+        <div class="coll-kpi-value" id="ck-products">284</div>
+        <div class="coll-kpi-sub">unique SKUs this session</div>
+      </div>
+      <div class="coll-kpi c3">
+        <div class="coll-kpi-label">Top Occasion</div>
+        <div class="coll-kpi-value" id="ck-top-occ" style="font-size:16px;margin-top:4px">Party / Night Out</div>
+        <div class="coll-kpi-sub">37% of all views</div>
+      </div>
+      <div class="coll-kpi c4">
+        <div class="coll-kpi-label">Dominant Mood</div>
+        <div class="coll-kpi-value" id="ck-top-mood" style="font-size:16px;margin-top:4px">Confident / Bold</div>
+        <div class="coll-kpi-sub">42% of purchases</div>
+      </div>
+      <div class="coll-kpi c5">
+        <div class="coll-kpi-label">Trending Style</div>
+        <div class="coll-kpi-value" id="ck-top-style" style="font-size:16px;margin-top:4px">Bohemian</div>
+        <div class="coll-kpi-sub">▲ +18% vs. HW 2024</div>
+      </div>
+    </div>
+
+    <!-- 4 ATTRIBUTE PANELS -->
+    <div class="attr-grid">
+
+      <!-- OCCASION -->
+      <div class="attr-card">
+        <div class="attr-hdr">
+          <div>
+            <div class="attr-title">🎯 Occasion</div>
+            <div class="attr-sub">Which context are customers shopping for?</div>
+          </div>
+          <span style="font-size:10px;color:var(--text-muted)">⚡ Simulated · Mapp Fashion Taxonomy</span>
+        </div>
+        <div class="attr-body" id="occasion-body"></div>
+      </div>
+
+      <!-- STYLE -->
+      <div class="attr-card">
+        <div class="attr-hdr">
+          <div>
+            <div class="attr-title">💅 Style / Aesthetic</div>
+            <div class="attr-sub">What visual language is resonating?</div>
+          </div>
+          <span style="font-size:10px;color:var(--text-muted)">⚡ Simulated · Mapp Fashion Taxonomy</span>
+        </div>
+        <div class="attr-body" id="style-body"></div>
+      </div>
+
+      <!-- MOOD -->
+      <div class="attr-card">
+        <div class="attr-hdr">
+          <div>
+            <div class="attr-title">😊 Mood / Emotional Driver</div>
+            <div class="attr-sub">What feeling is the customer buying into?</div>
+          </div>
+          <span style="font-size:10px;color:var(--text-muted)">⚡ Simulated · Mapp Fashion Taxonomy</span>
+        </div>
+        <div class="attr-body" id="mood-body"></div>
+      </div>
+
+      <!-- TREND -->
+      <div class="attr-card">
+        <div class="attr-hdr">
+          <div>
+            <div class="attr-title">🔮 Trend Relevance</div>
+            <div class="attr-sub">How trend-driven are current interactions?</div>
+          </div>
+          <span style="font-size:10px;color:var(--text-muted)">⚡ Simulated · Mapp Fashion Taxonomy</span>
+        </div>
+        <div class="attr-body" id="trend-body"></div>
+      </div>
+
+    </div>
+
+    <!-- COLLECTION COMPARISON: FW vs HW -->
+    <div class="coll-compare">
+      <div class="compare-card">
+        <div class="compare-hdr">
+          <div>
+            <div class="compare-title">Occasion — FW 2025 vs HW 2024</div>
+            <div class="attr-sub">% of all interactions per occasion per collection</div>
+          </div>
+        </div>
+        <div class="compare-body">
+          <div class="compare-row" style="font-size:10px;font-weight:700;color:var(--text-muted);padding-bottom:8px">
+            <span class="compare-name">Occasion</span>
+            <span class="compare-fw">FW25</span>
+            <span class="compare-hw">HW24</span>
+            <span style="width:52px;text-align:right;font-size:10px;font-weight:700;color:var(--text-muted)">Δ</span>
+          </div>
+          <div id="compare-occasion"></div>
+        </div>
+      </div>
+      <div class="compare-card">
+        <div class="compare-hdr">
+          <div>
+            <div class="compare-title">Style — FW 2025 vs HW 2024</div>
+            <div class="attr-sub">% of all interactions per style per collection</div>
+          </div>
+        </div>
+        <div class="compare-body">
+          <div class="compare-row" style="font-size:10px;font-weight:700;color:var(--text-muted);padding-bottom:8px">
+            <span class="compare-name">Style</span>
+            <span class="compare-fw">FW25</span>
+            <span class="compare-hw">HW24</span>
+            <span style="width:52px;text-align:right;font-size:10px;font-weight:700;color:var(--text-muted)">Δ</span>
+          </div>
+          <div id="compare-style"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end tab-collection -->
+
+  <!-- ═══════════════ TAB 5: MI BASELINE ═══════════════ -->
+  <div id="tab-mi" class="tab-panel">
+
+    <!-- KPI Strip -->
+    <div class="mi-kpis">
+      <div class="mi-kpi c1">
+        <div class="mi-kpi-label">Avg Return Rate</div>
+        <div class="mi-kpi-value" id="mi-avg-rate">—</div>
+        <div class="mi-kpi-sub">across all categories · last 28 days</div>
+      </div>
+      <div class="mi-kpi c2">
+        <div class="mi-kpi-label">Highest Risk Category</div>
+        <div class="mi-kpi-value" id="mi-top-cat" style="font-size:18px;margin-top:4px">—</div>
+        <div class="mi-kpi-sub" id="mi-top-cat-rate">return rate</div>
+      </div>
+      <div class="mi-kpi c3">
+        <div class="mi-kpi-label">Highest Risk Occasion</div>
+        <div class="mi-kpi-value" id="mi-top-occ" style="font-size:14px;margin-top:6px;line-height:1.2">—</div>
+        <div class="mi-kpi-sub" id="mi-top-occ-rate">return rate</div>
+      </div>
+      <div class="mi-kpi c4">
+        <div class="mi-kpi-label">SKUs Analysed</div>
+        <div class="mi-kpi-value" id="mi-total-skus">—</div>
+        <div class="mi-kpi-sub">last 28 days · top by return rate</div>
+      </div>
+    </div>
+
+    <div class="mi-grid">
+
+      <!-- Categories -->
+      <div class="mi-card">
+        <div class="mi-hdr">
+          <div>
+            <div class="mi-title">Return Rate by Category</div>
+            <div class="mi-sub">Orders · returns · net revenue · last 28 days</div>
+          </div>
+          <span style="font-size:10px;color:var(--text-muted)">MI Analytics API · Live</span>
+        </div>
+        <div class="mi-body">
+          <div class="mi-row hdr">
+            <span>Category</span><span style="text-align:right">Ret%</span>
+            <span>Rate bar</span><span style="text-align:right">Net Rev</span>
+            <span style="text-align:right">Orders</span>
+          </div>
+          <div id="mi-cat-rows"></div>
+        </div>
+      </div>
+
+      <!-- Occasions -->
+      <div class="mi-card">
+        <div class="mi-hdr">
+          <div>
+            <div class="mi-title">Return Rate by Occasion</div>
+            <div class="mi-sub">Contextual attribute · last 28 days</div>
+          </div>
+          <span style="font-size:10px;color:var(--text-muted)">MI Analytics API · Live</span>
+        </div>
+        <div class="mi-body">
+          <div class="mi-row hdr">
+            <span>Occasion</span><span style="text-align:right">Ret%</span>
+            <span>Rate bar</span><span style="text-align:right">Net Rev</span>
+            <span style="text-align:right">Orders</span>
+          </div>
+          <div id="mi-occ-rows"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Top SKUs -->
+    <div class="mi-card">
+      <div class="mi-hdr">
+        <div>
+          <div class="mi-title">Top 20 SKUs by Return Rate</div>
+          <div class="mi-sub">Products with highest return risk · last 28 days</div>
+        </div>
+        <span style="font-size:10px;color:var(--text-muted)">MI Analytics API · Live</span>
+      </div>
+      <div class="mi-body">
+        <div class="mi-row hdr" style="grid-template-columns:160px 60px 1fr 70px 60px">
+          <span>SKU</span><span style="text-align:right">Ret%</span>
+          <span>Rate bar</span><span style="text-align:right">Revenue</span>
+          <span style="text-align:right">Orders</span>
+        </div>
+        <div id="mi-sku-rows"></div>
+      </div>
+    </div>
+
+  </div><!-- end tab-mi -->
 
 </main>
 
@@ -899,7 +2045,28 @@ function updateCartDist(){
 
 // ── RUNWAY ────────────────────────────────────────────────────────────────────
 
-function spawnCard(intType, product, segId, adjP){
+// ── LANE WIDTH CACHE ──────────────────────────────────────────────────────────
+// offsetWidth is 0 when tab-panel is hidden (display:none).
+// We cache the real width once and reuse it.
+let cachedLaneW = 0;
+
+
+function getLaneWidth() {
+  if (cachedLaneW > 100) return cachedLaneW;
+  // Use the main element width as the most reliable source
+  const main = document.querySelector('main');
+  const runway = document.querySelector('.runway');
+  const w = (runway && runway.offsetWidth > 100) ? runway.offsetWidth
+           : (main && main.offsetWidth > 100) ? main.offsetWidth - 72
+           : window.innerWidth - 100;
+  if (w > 100) cachedLaneW = w;
+  return w;
+}
+
+// Recache on window resize
+window.addEventListener('resize', () => { cachedLaneW = 0; });
+
+function spawnCard(intType, product, segId, adjP, risk){
   const lane=document.getElementById('lane-'+intType.id);
   if(!lane)return;
   const laneW=lane.offsetWidth, startX=134, travel=laneW-startX+80;
@@ -912,17 +2079,22 @@ function spawnCard(intType, product, segId, adjP){
   card.style.setProperty('--travel',travel+'px');
   card.style.animationDuration=dur+'s';
 
-  // Show price on cart and buy; show view price more subtly
   const priceStr = intType.id==='view'
     ? '€'+product.price.toFixed(2)
     : fmtEur(adjP.price) + (adjP.items>1?' ×'+adjP.items:'');
 
+  let riskBadge = '';
+  if (risk && risk.rate > 0 && intType.id !== 'view') {
+    riskBadge = `<span class="risk-badge ${risk.level}">${risk.rate}%</span>`;
+  }
+
   card.innerHTML=`
     <div class="pcard-emoji">${product.emoji}</div>
-    <div><div class="pcard-name">${product.name}</div><div class="pcard-meta">${product.cat}</div></div>
+    <div><div class="pcard-name">${product.name}</div><div class="pcard-meta">${product.cat||product.category}</div></div>
     <div class="pcard-seg" style="background:${segObj.color}" title="${segObj.label}"></div>
     <span class="ptag ${intType.id}">${intType.icon}</span>
     <span class="pprice ${intType.id}">${priceStr}</span>
+    ${riskBadge}
   `;
   lane.appendChild(card);
   card.addEventListener('animationend',()=>card.remove());
@@ -1150,8 +2322,12 @@ function processEvent(ev) {
   // Skip if segment is filtered out
   if (!activeSegs.has(segId)) return;
 
-  spawnCard(intType, product, segId, {price, items});
+  // Extract return risk from backend event
+  const risk = ev.returnRisk || null;
+
+  spawnCard(intType, product, segId, {price, items}, risk);
   addLog(intType, product, segId, {price, items});
+  if (risk && intType.id !== 'view') addRiskAlert(product, risk, intType.id);
 
   const f   = segFinance[segId];
   const now = Date.now();
@@ -1319,10 +2495,691 @@ document.addEventListener('click', function unlockAudio() {
 }, { once: true });
 
 // Start with mock immediately, then try to connect to backend
-startMockLoop();
-connectWebSocket();
+// Small delay to ensure DOM/lanes are rendered before first card spawns
+setTimeout(() => {
+  startMockLoop();
+  connectWebSocket();
+}, 300);
 
 setInterval(updateSegUI, 3000);
+
+// ── TAB SWITCHING ─────────────────────────────────────────────────────────────
+
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+  // Re-render MI tab when switching to it
+  if (name === 'mi' && miBaseline) renderMITab(miBaseline);
+}
+
+// ── COLLECTION FILTER STATE ───────────────────────────────────────────────────
+
+const collFilter = { season:'fw', year:'2025', line:'all', name:'all' };
+
+function setColl(key, val, btn) {
+  collFilter[key] = val;
+  btn.closest('.coll-filter-group').querySelectorAll('.coll-btn')
+    .forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCollectionTab();
+}
+
+// ── MOCK ATTRIBUTE DATA ── SIMULATED (replace with Mapp Fashion Taxonomy API)
+// Each row: name, fw/hw interaction %, revenue (€), orders, fpstr (%), returns (%)
+// Per product line breakdown for line filter
+
+const ATTR_DATA = {
+  occasion: {
+    fw: [
+      {name:'Party / Night Out', pct:37, rev:124800, orders:892, fpstr:82, ret:12, spark:[3,4,5,6,7,8,9],
+       line:{premium:{pct:45,rev:58400,orders:312,fpstr:91,ret:9},  basics:{pct:28,rev:38200,orders:420,fpstr:74,ret:14}, capsule:{pct:38,rev:28200,orders:160,fpstr:88,ret:11}}},
+      {name:'Beach / Holiday',   pct:24, rev:74200,  orders:541, fpstr:76, ret:8,  spark:[2,3,5,7,8,9,8],
+       line:{premium:{pct:18,rev:28100,orders:188,fpstr:84,ret:6},  basics:{pct:30,rev:32400,orders:248,fpstr:68,ret:10}, capsule:{pct:22,rev:13700,orders:105,fpstr:80,ret:7}}},
+      {name:'Casual / Everyday', pct:18, rev:48600,  orders:612, fpstr:61, ret:6,  spark:[6,5,4,4,3,3,2],
+       line:{premium:{pct:12,rev:14200,orders:180,fpstr:70,ret:5},  basics:{pct:28,rev:24800,orders:340,fpstr:55,ret:7},  capsule:{pct:14,rev:9600, orders:92, fpstr:66,ret:5}}},
+      {name:'Work / Office',     pct:12, rev:39800,  orders:298, fpstr:88, ret:5,  spark:[5,5,4,3,3,2,2],
+       line:{premium:{pct:15,rev:18400,orders:142,fpstr:94,ret:3},  basics:{pct:8, rev:14200,orders:112,fpstr:82,ret:6},  capsule:{pct:16,rev:7200, orders:44, fpstr:88,ret:4}}},
+      {name:'Date Night',        pct:9,  rev:28400,  orders:196, fpstr:79, ret:14, spark:[3,3,3,3,3,3,2],
+       line:{premium:{pct:10,rev:12800,orders:88, fpstr:86,ret:12}, basics:{pct:6, rev:9400, orders:76, fpstr:72,ret:16}, capsule:{pct:10,rev:6200, orders:32, fpstr:80,ret:13}}},
+    ],
+    hw: [
+      {name:'Work / Office',     pct:28, rev:98400,  orders:742, fpstr:91, ret:4,  spark:[5,6,6,7,7,8,8],
+       line:{premium:{pct:24,rev:48200,orders:342,fpstr:95,ret:3},  basics:{pct:18,rev:34800,orders:280,fpstr:88,ret:5},  capsule:{pct:20,rev:15400,orders:120,fpstr:90,ret:4}}},
+      {name:'Casual / Everyday', pct:24, rev:62800,  orders:798, fpstr:58, ret:7,  spark:[6,6,5,5,5,4,4],
+       line:{premium:{pct:14,rev:18400,orders:224,fpstr:68,ret:6},  basics:{pct:34,rev:32600,orders:420,fpstr:52,ret:8},  capsule:{pct:18,rev:11800,orders:154,fpstr:62,ret:6}}},
+      {name:'Party / Night Out', pct:22, rev:88200,  orders:614, fpstr:85, ret:11, spark:[4,5,5,6,6,7,7],
+       line:{premium:{pct:30,rev:44800,orders:298,fpstr:92,ret:9},  basics:{pct:16,rev:28200,orders:214,fpstr:79,ret:13}, capsule:{pct:28,rev:15200,orders:102,fpstr:86,ret:10}}},
+      {name:'Lounge / Home',     pct:16, rev:32400,  orders:488, fpstr:52, ret:3,  spark:[2,3,4,4,5,5,6],
+       line:{premium:{pct:6, rev:8200, orders:98, fpstr:62,ret:2},  basics:{pct:22,rev:18800,orders:298,fpstr:48,ret:4},  capsule:{pct:8, rev:5400, orders:92, fpstr:56,ret:3}}},
+      {name:'Outdoor / Active',  pct:10, rev:28800,  orders:312, fpstr:74, ret:9,  spark:[3,3,2,2,2,1,1],
+       line:{premium:{pct:26,rev:14400,orders:142,fpstr:84,ret:7},  basics:{pct:10,rev:9800, orders:128,fpstr:66,ret:11}, capsule:{pct:26,rev:4600, orders:42, fpstr:78,ret:8}}},
+    ],
+  },
+  style: {
+    fw: [
+      {name:'Bohemian',           pct:29, rev:88400,  orders:642, fpstr:71, ret:9,  spark:[1,2,4,5,7,8,9],
+       line:{premium:{pct:20,rev:32400,orders:218,fpstr:82,ret:7},  basics:{pct:32,rev:38200,orders:312,fpstr:62,ret:11}, capsule:{pct:38,rev:17800,orders:112,fpstr:76,ret:8}}},
+      {name:'Romantic',           pct:22, rev:72800,  orders:498, fpstr:78, ret:13, spark:[4,5,5,6,6,7,7],
+       line:{premium:{pct:28,rev:34200,orders:198,fpstr:88,ret:11}, basics:{pct:16,rev:24800,orders:218,fpstr:70,ret:15}, capsule:{pct:24,rev:13800,orders:82, fpstr:80,ret:12}}},
+      {name:'Minimalist',         pct:18, rev:62400,  orders:412, fpstr:86, ret:5,  spark:[6,5,5,4,4,3,3],
+       line:{premium:{pct:26,rev:30200,orders:188,fpstr:92,ret:4},  basics:{pct:14,rev:22400,orders:168,fpstr:80,ret:6},  capsule:{pct:16,rev:9800,ounds:56, fpstr:86,ret:5}}},
+      {name:'Athleisure',         pct:16, rev:44200,  orders:582, fpstr:64, ret:7,  spark:[5,5,4,4,4,3,3],
+       line:{premium:{pct:10,rev:14800,orders:168,fpstr:74,ret:5},  basics:{pct:22,rev:21400,orders:312,fpstr:58,ret:8},  capsule:{pct:12,rev:8000, orders:102,fpstr:68,ret:7}}},
+      {name:'Classic / Timeless', pct:15, rev:58200,  orders:342, fpstr:92, ret:4,  spark:[7,6,6,5,4,3,2],
+       line:{premium:{pct:16,rev:28800,orders:154,fpstr:96,ret:3},  basics:{pct:16,rev:20400,orders:148,fpstr:88,ret:5},  capsule:{pct:10,rev:9000, orders:40, fpstr:92,ret:3}}},
+    ],
+    hw: [
+      {name:'Classic / Timeless', pct:32, rev:118400, orders:782, fpstr:94, ret:3,  spark:[5,6,7,7,8,8,9],
+       line:{premium:{pct:36,rev:58200,orders:342,fpstr:97,ret:2},  basics:{pct:24,rev:40800,orders:312,fpstr:91,ret:4},  capsule:{pct:28,rev:19400,orders:128,fpstr:94,ret:3}}},
+      {name:'Minimalist',         pct:26, rev:84200,  orders:562, fpstr:88, ret:4,  spark:[5,6,6,7,7,7,8],
+       line:{premium:{pct:30,rev:40800,orders:248,fpstr:93,ret:3},  basics:{pct:20,rev:30400,orders:228,fpstr:84,ret:5},  capsule:{pct:22,rev:13000,orders:86, fpstr:89,ret:4}}},
+      {name:'Preppy',             pct:20, rev:62800,  orders:428, fpstr:82, ret:6,  spark:[2,3,4,5,6,7,8],
+       line:{premium:{pct:18,rev:28400,orders:186,fpstr:88,ret:5},  basics:{pct:14,rev:22800,orders:178,fpstr:77,ret:7},  capsule:{pct:24,rev:11600,orders:64, fpstr:84,ret:6}}},
+      {name:'Athleisure',         pct:14, rev:38400,  orders:494, fpstr:68, ret:8,  spark:[5,4,4,3,3,3,2],
+       line:{premium:{pct:8, rev:12200,orders:152,fpstr:78,ret:6},  basics:{pct:24,rev:18800,orders:264,fpstr:62,ret:9},  capsule:{pct:10,rev:7400, orders:78, fpstr:72,ret:7}}},
+      {name:'Romantic',           pct:8,  rev:24400,  orders:198, fpstr:74, ret:14, spark:[4,3,2,2,2,1,1],
+       line:{premium:{pct:8, rev:10200,orders:82, fpstr:82,ret:12}, basics:{pct:18,rev:9800, orders:86, fpstr:68,ret:16}, capsule:{pct:16,rev:4400, orders:30, fpstr:76,ret:13}}},
+    ],
+  },
+  mood: {
+    fw: [
+      {name:'Confident / Bold',   pct:42, rev:138400, orders:924, fpstr:84, ret:10, spark:[3,4,5,6,7,8,9],
+       line:{premium:{pct:50,rev:64800,orders:398,fpstr:92,ret:8},  basics:{pct:32,rev:48200,orders:412,fpstr:78,ret:12}, capsule:{pct:48,rev:25400,orders:114,fpstr:88,ret:9}}},
+      {name:'Playful / Fun',      pct:24, rev:62400,  orders:688, fpstr:68, ret:8,  spark:[2,3,4,5,6,7,8],
+       line:{premium:{pct:18,rev:22800,orders:224,fpstr:78,ret:6},  basics:{pct:28,rev:28800,orders:352,fpstr:62,ret:9},  capsule:{pct:26,rev:10800,orders:112,fpstr:72,ret:7}}},
+      {name:'Effortless',         pct:18, rev:48200,  orders:514, fpstr:72, ret:6,  spark:[5,5,4,4,3,3,2],
+       line:{premium:{pct:16,rev:18400,orders:168,fpstr:80,ret:5},  basics:{pct:22,rev:20800,orders:252,fpstr:66,ret:7},  capsule:{pct:14,rev:9000, orders:94, fpstr:76,ret:5}}},
+      {name:'Elegant / Polished', pct:12, rev:52800,  orders:298, fpstr:91, ret:5,  spark:[4,4,3,3,2,2,2],
+       line:{premium:{pct:16,rev:28400,orders:148,fpstr:96,ret:4},  basics:{pct:8, rev:16200,orders:108,fpstr:86,ret:6},  capsule:{pct:12,rev:8200, orders:42, fpstr:92,ret:4}}},
+      {name:'Edgy / Statement',   pct:4,  rev:14200,  orders:98,  fpstr:62, ret:18, spark:[3,3,2,2,1,1,1],
+       line:{premium:{pct:0, rev:0,     orders:0,  fpstr:0, ret:0},   basics:{pct:10,rev:9800, orders:72, fpstr:58,ret:20}, capsule:{pct:0, rev:4400, orders:26, fpstr:68,ret:15}}},
+    ],
+    hw: [
+      {name:'Elegant / Polished', pct:34, rev:128400, orders:842, fpstr:93, ret:4,  spark:[4,5,6,7,8,9,9],
+       line:{premium:{pct:42,rev:62400,orders:386,fpstr:97,ret:3},  basics:{pct:22,rev:44800,orders:336,fpstr:90,ret:5},  capsule:{pct:36,rev:21200,orders:120,fpstr:94,ret:4}}},
+      {name:'Cozy / Comfort',     pct:28, rev:58200,  orders:842, fpstr:54, ret:3,  spark:[2,3,4,5,7,8,9],
+       line:{premium:{pct:10,rev:14800,orders:188,fpstr:64,ret:2},  basics:{pct:38,rev:32800,orders:512,fpstr:49,ret:4},  capsule:{pct:14,rev:10600,orders:142,fpstr:58,ret:3}}},
+      {name:'Confident / Bold',   pct:22, rev:88400,  orders:598, fpstr:86, ret:9,  spark:[6,6,5,5,4,3,3],
+       line:{premium:{pct:28,rev:42800,orders:274,fpstr:92,ret:7},  basics:{pct:18,rev:30800,orders:228,fpstr:81,ret:11}, capsule:{pct:30,rev:14800,orders:96, fpstr:88,ret:8}}},
+      {name:'Effortless',         pct:16, rev:42400,  orders:488, fpstr:74, ret:5,  spark:[5,4,4,3,3,2,2],
+       line:{premium:{pct:20,rev:18200,orders:198,fpstr:82,ret:4},  basics:{pct:22,rev:18400,orders:234,fpstr:68,ret:6},  capsule:{pct:20,rev:5800, orders:56, fpstr:78,ret:5}}},
+      {name:'Edgy / Statement',   pct:0,  rev:0,      orders:0,   fpstr:0,  ret:0,  spark:[4,2,1,1,0,0,0],
+       line:{premium:{pct:0, rev:0,     orders:0,  fpstr:0, ret:0},   basics:{pct:0, rev:0,     orders:0,  fpstr:0, ret:0},   capsule:{pct:0, rev:0,     orders:0,  fpstr:0, ret:0}}},
+    ],
+  },
+  trend: {
+    fw: [
+      {name:'Trending Now',     pct:38, rev:102400, orders:824, fpstr:58, ret:11, spark:[2,3,5,6,7,9,9],
+       line:{premium:{pct:32,rev:44200,orders:312,fpstr:68,ret:9},  basics:{pct:40,rev:40800,orders:388,fpstr:52,ret:13}, capsule:{pct:48,rev:17400,orders:124,fpstr:62,ret:10}}},
+      {name:'Seasonal Trend',   pct:30, rev:88200,  orders:612, fpstr:74, ret:8,  spark:[5,5,6,6,7,7,8],
+       line:{premium:{pct:28,rev:38400,orders:248,fpstr:82,ret:6},  basics:{pct:32,rev:36800,orders:272,fpstr:68,ret:10}, capsule:{pct:26,rev:13000,orders:92, fpstr:76,ret:7}}},
+      {name:'Classic Reissue',  pct:20, rev:74200,  orders:398, fpstr:88, ret:5,  spark:[7,6,6,5,4,4,3],
+       line:{premium:{pct:28,rev:36400,orders:188,fpstr:94,ret:4},  basics:{pct:14,rev:26400,orders:164,fpstr:84,ret:6},  capsule:{pct:18,rev:11400,orders:46, fpstr:90,ret:4}}},
+      {name:'Micro-Trend',      pct:12, rev:24400,  orders:298, fpstr:42, ret:16, spark:[3,3,3,4,4,3,3],
+       line:{premium:{pct:12,rev:10200,orders:108,fpstr:52,ret:14}, basics:{pct:14,rev:10200,orders:148,fpstr:38,ret:18}, capsule:{pct:8, rev:4000, orders:42, fpstr:46,ret:15}}},
+    ],
+    hw: [
+      {name:'Seasonal Trend',   pct:38, rev:112400, orders:784, fpstr:78, ret:7,  spark:[5,6,6,7,8,8,9],
+       line:{premium:{pct:32,rev:52200,orders:328,fpstr:86,ret:5},  basics:{pct:40,rev:40800,orders:332,fpstr:72,ret:9},  capsule:{pct:34,rev:19400,orders:124,fpstr:80,ret:6}}},
+      {name:'Classic Reissue',  pct:32, rev:104800, orders:624, fpstr:92, ret:4,  spark:[5,5,6,7,7,8,8],
+       line:{premium:{pct:36,rev:52400,orders:278,fpstr:96,ret:3},  basics:{pct:24,rev:36400,orders:248,fpstr:89,ret:5},  capsule:{pct:30,rev:16000,orders:98, fpstr:93,ret:4}}},
+      {name:'Trending Now',     pct:20, rev:52400,  orders:498, fpstr:56, ret:12, spark:[4,4,4,4,3,3,3],
+       line:{premium:{pct:18,rev:22800,orders:192,fpstr:66,ret:10}, basics:{pct:24,rev:22400,orders:234,fpstr:50,ret:14}, capsule:{pct:24,rev:7200, orders:72, fpstr:60,ret:11}}},
+      {name:'Micro-Trend',      pct:10, rev:18200,  orders:224, fpstr:38, ret:19, spark:[3,3,2,2,1,1,1],
+       line:{premium:{pct:14,rev:8200, orders:92, fpstr:46,ret:17}, basics:{pct:12,rev:7400, orders:106,fpstr:34,ret:21}, capsule:{pct:12,rev:2600, orders:26, fpstr:40,ret:18}}},
+    ],
+  },
+};
+
+// ── RENDER COLLECTION TAB ─────────────────────────────────────────────────────
+
+function fmtRevSmall(v) {
+  if (v >= 1000000) return '€'+(v/1000000).toFixed(1)+'M';
+  if (v >= 1000)    return '€'+(v/1000).toFixed(1)+'K';
+  return '€'+v;
+}
+
+function fpstrColor(v) {
+  if (v >= 85) return '#065F46';  // dark green
+  if (v >= 70) return '#0F766E';  // teal
+  if (v >= 55) return '#92400E';  // amber
+  return '#991B1B';               // red
+}
+
+function fpstrBg(v) {
+  if (v >= 85) return '#D1FAE5';
+  if (v >= 70) return '#CCFBF1';
+  if (v >= 55) return '#FEF3C7';
+  return '#FEE2E2';
+}
+
+function retColor(v) {
+  if (v <= 5)  return '#065F46';
+  if (v <= 10) return '#0F766E';
+  if (v <= 15) return '#92400E';
+  return '#991B1B';
+}
+
+function retBg(v) {
+  if (v <= 5)  return '#D1FAE5';
+  if (v <= 10) return '#CCFBF1';
+  if (v <= 15) return '#FEF3C7';
+  return '#FEE2E2';
+}
+
+function attrRows(data, color, bodyId) {
+  const season = collFilter.season === 'all' ? 'fw' : collFilter.season;
+  const rows   = data[season] || data.fw;
+  const line   = collFilter.line;
+
+  // Pick values based on line filter
+  const getV = (r) => line === 'all' ? r : (r.line[line] || {pct:0, rev:0, orders:0, fpstr:0, ret:0});
+
+  const maxRev = Math.max(...rows.map(r => getV(r).rev || r.rev), 1);
+
+  const el = document.getElementById(bodyId);
+  if (!el) return;
+
+  // Column header
+  el.innerHTML = `
+    <div style="display:grid;grid-template-columns:130px 1fr 70px 52px 60px 60px;gap:8px;padding:0 0 6px;border-bottom:1px solid var(--border);margin-bottom:2px">
+      <span style="font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-muted)">Attribute</span>
+      <span style="font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-muted)">Revenue share</span>
+      <span style="font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-muted);text-align:right">Revenue</span>
+      <span style="font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-muted);text-align:right">Orders</span>
+      <span style="font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-muted);text-align:right">FPSTR</span>
+      <span style="font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-muted);text-align:right">Returns</span>
+    </div>
+  ` + rows.map(r => {
+    const v    = getV(r);
+    const rev  = v.rev    !== undefined ? v.rev    : r.rev;
+    const ord  = v.orders !== undefined ? v.orders : r.orders;
+    const fps  = v.fpstr  !== undefined ? v.fpstr  : r.fpstr;
+    const ret  = v.ret    !== undefined ? v.ret    : r.ret;
+    const pct  = v.pct    !== undefined ? v.pct    : r.pct;
+    const barW = Math.round((rev / maxRev) * 100);
+
+    const sparkHtml = r.spark.map((h, i) => {
+      const hp = Math.round((h/9)*100);
+      const hi = i === r.spark.length - 1;
+      return `<div class="trend-bar${hi?' hi':''}" style="height:${hp}%;background:${color}"></div>`;
+    }).join('');
+
+    return `<div style="display:grid;grid-template-columns:130px 1fr 70px 52px 60px 60px;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid rgba(123,111,232,0.05)">
+      <span style="font-size:11.5px;font-weight:500;color:var(--text-dark)">${r.name}</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="flex:1;height:6px;background:var(--bg);border-radius:3px;overflow:hidden">
+          <div style="width:${barW}%;height:100%;border-radius:3px;background:${color};transition:width 0.6s"></div>
+        </div>
+        <span style="font-size:10.5px;font-weight:600;color:var(--text-muted);width:26px;text-align:right">${pct}%</span>
+        <div class="trend-mini">${sparkHtml}</div>
+      </div>
+      <span style="font-size:12px;font-weight:700;color:${color};text-align:right">${fmtRevSmall(rev)}</span>
+      <span style="font-size:12px;font-weight:600;color:var(--text-mid);text-align:right">${ord.toLocaleString()}</span>
+      <span style="font-size:11px;font-weight:700;padding:2px 6px;border-radius:8px;text-align:center;background:${fpstrBg(fps)};color:${fpstrColor(fps)}">${fps}%</span>
+      <span style="font-size:11px;font-weight:700;padding:2px 6px;border-radius:8px;text-align:center;background:${retBg(ret)};color:${retColor(ret)}">${ret}%</span>
+    </div>`;
+  }).join('');
+}
+
+function compareRows(data, cid) {
+  const rows = data.fw;
+  const el   = document.getElementById(cid);
+  if (!el) return;
+  el.innerHTML = rows.map(r => {
+    const diff = r.pct - r.hw;  // fw pct vs hw pct
+    const dc   = diff > 2 ? 'up' : diff < -2 ? 'down' : '';
+    const dt   = diff > 0 ? '▲ +'+diff : diff < 0 ? '▼ '+diff : '=';
+    const hwRow = data.hw.find(h => h.name === r.name);
+    const hwPct = hwRow ? hwRow.pct : r.hw;
+    return `<div class="compare-row">
+      <span class="compare-name">${r.name}</span>
+      <span class="compare-fw">${r.pct}%</span>
+      <span class="compare-hw">${hwPct}%</span>
+      <span class="compare-diff ${dc}" style="width:52px;text-align:right">${dt}</span>
+    </div>`;
+  }).join('');
+}
+
+function renderCollectionTab() {
+  const sMap = {fw:'FW', hw:'HW', all:'All Seasons'};
+  const lMap = {all:'All Lines', premium:'Premium', basics:'Basics', capsule:'Capsule'};
+  const nMap = {all:'All Collections', 'summer-breeze':'Summer Breeze', 'urban-edit':'Urban Edit', 'resort-24':"Resort '24", noir:'Noir'};
+
+  const ckName  = document.getElementById('ck-name');
+  const ckRange = document.getElementById('ck-range');
+  if (ckName)  ckName.textContent  = `${sMap[collFilter.season]||'FW'} ${collFilter.year} · ${nMap[collFilter.name]}`;
+  if (ckRange) ckRange.textContent = `${collFilter.season==='fw'?'Feb – Jul':collFilter.season==='hw'?'Aug – Jan':'Full Year'} · ${lMap[collFilter.line]}`;
+
+  // Update top KPIs dynamically from active data
+  const season = collFilter.season === 'all' ? 'fw' : collFilter.season;
+  const line   = collFilter.line;
+  const occ    = ATTR_DATA.occasion[season] || ATTR_DATA.occasion.fw;
+  const topOcc = occ[0];
+  const topOccEl = document.getElementById('ck-top-occ');
+  if (topOccEl) topOccEl.textContent = topOcc.name;
+
+  const moods   = ATTR_DATA.mood[season] || ATTR_DATA.mood.fw;
+  const topMood = moods[0];
+  const topMoodEl = document.getElementById('ck-top-mood');
+  if (topMoodEl) topMoodEl.textContent = topMood.name;
+
+  const styles    = ATTR_DATA.style[season] || ATTR_DATA.style.fw;
+  const topStyle  = styles[0];
+  const topStyleEl = document.getElementById('ck-top-style');
+  if (topStyleEl) topStyleEl.textContent = topStyle.name;
+
+  attrRows(ATTR_DATA.occasion, 'var(--violet)', 'occasion-body');
+  attrRows(ATTR_DATA.style,    'var(--pink)',   'style-body');
+  attrRows(ATTR_DATA.mood,     'var(--green)',  'mood-body');
+  attrRows(ATTR_DATA.trend,    'var(--amber)',  'trend-body');
+
+  compareRows(ATTR_DATA.occasion, 'compare-occasion');
+  compareRows(ATTR_DATA.style,    'compare-style');
+}
+
+renderCollectionTab();
+
+
+// ── RISK ALERT STRIP ──────────────────────────────────────────────────────────
+
+// ── RISK TRAFFIC LIGHT STATE ─────────────────────────────────────────────────
+// Tracks the latest event per risk level — updates silently, fixed height
+const riskState = {
+  high:   { product: null, rate: 0, cat: '', type: '', ts: 0 },
+  medium: { product: null, rate: 0, cat: '', type: '', ts: 0 },
+  low:    { product: null, rate: 0, cat: '', type: '', ts: 0 },
+};
+
+function addRiskAlert(product, risk, interaction) {
+  if (!risk || risk.rate <= 0) return;
+
+  const level = risk.level; // 'high' | 'medium' | 'low' | 'minimal'
+  if (level === 'minimal') return;
+
+  // Map to traffic light bucket
+  const bucket = level === 'high' ? 'high' : level === 'medium' ? 'medium' : 'low';
+  riskState[bucket] = {
+    product, rate: risk.rate, cat: product.category || '',
+    type: interaction, ts: Date.now()
+  };
+
+  updateTrafficLight();
+}
+
+function updateTrafficLight() {
+  const cfg = {
+    high:   { id: 'rl-red',   dot: 'red',   activeClass: 'active-red',   titleClass: 'red' },
+    medium: { id: 'rl-amber', dot: 'amber',  activeClass: 'active-amber', titleClass: 'amber' },
+    low:    { id: 'rl-green', dot: 'green',  activeClass: 'active-green', titleClass: 'green' },
+  };
+
+  for (const [bucket, c] of Object.entries(cfg)) {
+    const s     = riskState[bucket];
+    const el    = document.getElementById(c.id);
+    const dot   = document.getElementById(c.id + '-dot');
+    const title = document.getElementById(c.id + '-title');
+    const sub   = document.getElementById(c.id + '-sub');
+    if (!el) continue;
+
+    if (s.rate > 0) {
+      el.className    = `risk-light ${c.activeClass}`;
+      dot.className   = `risk-dot ${c.dot}${bucket === 'high' ? ' pulse' : ''}`;
+      title.className = `risk-light-title ${c.titleClass}`;
+      const typeLabel = {cart:'CART', buy:'BUY'}[s.type] || s.type.toUpperCase();
+      title.textContent = `${s.rate}% · ${s.cat || s.product?.name || '—'}`;
+      sub.textContent   = `${typeLabel} · ${timeSince(s.ts)}`;
+    } else {
+      el.className    = 'risk-light inactive';
+      dot.className   = 'risk-dot off';
+      title.className = 'risk-light-title off';
+      title.textContent = bucket === 'high' ? 'High Risk' : bucket === 'medium' ? 'Medium Risk' : 'Low Risk';
+      sub.textContent   = 'no events yet';
+    }
+  }
+}
+
+function timeSince(ts) {
+  const s = Math.floor((Date.now() - ts) / 1000);
+  if (s < 60)  return s + 's ago';
+  return Math.floor(s/60) + 'm ago';
+}
+
+// Refresh "time since" labels every 10 seconds
+setInterval(() => { if (riskState.high.rate || riskState.medium.rate || riskState.low.rate) updateTrafficLight(); }, 10000);
+
+// ── MI BASELINE LOADER ────────────────────────────────────────────────────────
+
+let miBaseline = null;
+
+async function loadMIBaseline() {
+  try {
+    const r = await fetch('/api/baseline');
+    const data = await r.json();
+    if (data.error) {
+      console.warn('[MI]', data.error);
+      const subEl = document.getElementById('riskStripSub');
+      if (subEl) subEl.textContent = 'MI unavailable';
+      return;
+    }
+    miBaseline = data;
+
+    // Update traffic light avg rate
+    const avgEl = document.getElementById('riskAvgRate');
+    if (avgEl) avgEl.textContent = data.summary.avg_return_rate + '%';
+    const subEl = document.getElementById('riskStripSub');
+    if (subEl) subEl.textContent = `${data.by_sku.length} SKUs · ${data.by_category.length} cats · 28d`;
+
+    // Render MI tab
+    renderMITab(data);
+    console.log('[MI] Baseline loaded:', data.summary);
+  } catch(e) {
+    console.warn('[MI] Baseline fetch failed:', e);
+    const subEl = document.getElementById('riskStripSub');
+    if (subEl) subEl.textContent = 'MI unavailable';
+  }
+}
+
+// Load on startup
+loadMIBaseline();
+
+// ── MI BASELINE TAB ───────────────────────────────────────────────────────────
+
+function fmtRevMI(v) {
+  if (v >= 1000000) return '€'+(v/1000000).toFixed(1)+'M';
+  if (v >= 1000)    return '€'+(v/1000).toFixed(0)+'K';
+  return '€'+Math.round(v);
+}
+
+function renderMIRows(rows, containerId, maxRate) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  const avg = miBaseline?.summary?.avg_return_rate || 13.6;
+  el.innerHTML = rows.map(r => {
+    const pct = Math.round((r.return_rate_qty / maxRate) * 100);
+    const col = r.return_rate_qty >= avg*1.15 ? '#EF4444' : r.return_rate_qty >= avg ? '#F59E0B' : '#7B6FE8';
+    const name = r.key.length > 22 ? r.key.substring(0,20)+'…' : r.key;
+    return `<div class="mi-row">
+      <span class="mi-key" title="${r.key}">${name}</span>
+      <span class="mi-rate" style="color:${col}">${r.return_rate_qty}%</span>
+      <div class="mi-bar-wrap"><div class="mi-bar" style="width:${pct}%;background:${col}"></div></div>
+      <span class="mi-rev">${fmtRevMI(r.net_revenue)}</span>
+      <span class="mi-orders">${r.orders.toLocaleString()}</span>
+    </div>`;
+  }).join('');
+}
+
+function renderMITab(data) {
+  const s = data.summary;
+  const setText = (id, val) => { const el=document.getElementById(id); if(el) el.textContent=val; };
+  setText('mi-avg-rate',   s.avg_return_rate + '%');
+  setText('mi-total-skus', s.total_skus.toLocaleString());
+  const topCat = data.by_category[0];
+  if (topCat) { setText('mi-top-cat', topCat.key); setText('mi-top-cat-rate', topCat.return_rate_qty+'% return rate'); }
+  const topOcc = data.by_occasion[0];
+  if (topOcc) { setText('mi-top-occ', topOcc.key); setText('mi-top-occ-rate', topOcc.return_rate_qty+'% return rate'); }
+  const maxCat = data.by_category[0]?.return_rate_qty || 20;
+  const maxOcc = data.by_occasion[0]?.return_rate_qty || 20;
+  const maxSku = data.by_sku[0]?.return_rate_qty || 20;
+  renderMIRows(data.by_category, 'mi-cat-rows', maxCat);
+  renderMIRows(data.by_occasion.slice(0,15), 'mi-occ-rows', maxOcc);
+  renderMIRows(data.by_sku.slice(0,20), 'mi-sku-rows', maxSku);
+}
+
+// ── HOOK RISK INTO WS EVENTS ──────────────────────────────────────────────────
+
+
+// ── HISTORICAL & ECOMMERCE CHARTS (⚡ Simulated data) ─────────────────────────
+
+// ── HELPERS ──────────────────────────────────────────────────────────
+const cssVar = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+const VIOLET = '#7B6FE8';
+const PINK   = '#EC4899';
+const NAVY   = '#2D2A5E';
+const V_LIGHT = '#A89DF0';
+const P_LIGHT = '#F9A8D4';
+
+const chartDefaults = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: { legend: { display: false }, tooltip: {
+    backgroundColor: NAVY,
+    titleFont: { family: "'DM Sans', sans-serif", size: 12 },
+    bodyFont:  { family: "'DM Sans', sans-serif", size: 12 },
+    padding: 10, cornerRadius: 8,
+  }},
+};
+
+// switchTab defined in main script
+
+// ── FILTER BUTTONS ───────────────────────────────────────────────────
+function setFilter(btn, group) {
+  btn.closest('.filter-group').querySelectorAll('.filter-btn')
+    .forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ── SEASON TOGGLE ────────────────────────────────────────────────────
+function setSeason(type, btn) {
+  document.querySelectorAll('.season-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function setSeason2(type, btn) {
+  btn.closest('.season-toggle').querySelectorAll('.season-btn')
+    .forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ── LIVE LINE CHART ──────────────────────────────────────────────────
+function makeLabels(n) {
+  const now = new Date();
+  return Array.from({length: n}, (_, i) => {
+    const d = new Date(now - (n - 1 - i) * 60000);
+    return d.getHours().toString().padStart(2,'0') + ':' + d.getMinutes().toString().padStart(2,'0');
+  });
+}
+
+const liveData = Array.from({length: 30}, () => Math.floor(280 + Math.random() * 120));
+const liveChartEl = document.getElementById('liveChart');
+const liveCtx  = liveChartEl ? liveChartEl.getContext('2d') : null;
+
+const gradient = liveCtx ? liveCtx.createLinearGradient(0, 0, 0, 220) : null;
+if (gradient) {
+  gradient.addColorStop(0, 'rgba(123,111,232,0.25)');
+  gradient.addColorStop(1, 'rgba(123,111,232,0.00)');
+}
+
+const liveChart = liveCtx ? new Chart(liveCtx, {
+  type: 'line',
+  data: {
+    labels: makeLabels(30),
+    datasets: [{
+      data: liveData,
+      borderColor: VIOLET,
+      borderWidth: 2,
+      backgroundColor: gradient,
+      fill: true,
+      tension: 0.4,
+      pointRadius: 0,
+      pointHoverRadius: 5,
+      pointHoverBackgroundColor: VIOLET,
+    }]
+  },
+  options: {
+    ...chartDefaults,
+    scales: {
+      x: { grid: { display: false }, ticks: { maxTicksLimit: 6, color: '#8B87A0', font: { size: 11 } } },
+      y: { grid: { color: 'rgba(123,111,232,0.08)' }, ticks: { color: '#8B87A0', font: { size: 11 } } }
+    }
+  }
+}) : null;
+
+// Simulate live updates
+setInterval(() => {
+  liveData.shift();
+  const next = Math.floor(280 + Math.random() * 120);
+  liveData.push(next);
+  if (liveChart) {
+    liveChart.data.labels = makeLabels(30);
+    liveChart.data.datasets[0].data = [...liveData];
+    liveChart.update('none');
+  }
+
+  // Update KPI
+  const luEl = document.getElementById('live-users');
+  if (luEl) luEl.textContent = (1200 + Math.floor(Math.random() * 200)).toLocaleString('de-DE');
+  const lpEl = document.getElementById('live-pv');
+  if (lpEl) lpEl.textContent = (300 + Math.floor(Math.random() * 80)).toLocaleString('de-DE');
+}, 3000);
+
+// ── DEVICE DONUT ─────────────────────────────────────────────────────
+const deviceChartEl = document.getElementById('deviceChart');
+if (deviceChartEl) new Chart(deviceChartEl, {
+  type: 'doughnut',
+  data: {
+    labels: ['Desktop', 'Mobile', 'Tablet'],
+    datasets: [{ data: [54, 38, 8], backgroundColor: [VIOLET, PINK, NAVY],
+      borderWidth: 0, hoverOffset: 6 }]
+  },
+  options: {
+    ...chartDefaults,
+    cutout: '68%',
+    plugins: { ...chartDefaults.plugins, legend: { display: false } }
+  }
+});
+
+// ── TREND CHART ───────────────────────────────────────────────────────
+const days = ['Mo','Di','Mi','Do','Fr','Sa','So','Mo','Di','Mi','Do','Fr','Sa','So'];
+const _el_trendChart = document.getElementById('trendChart'); if (_el_trendChart) new Chart(_el_trendChart, {
+  type: 'line',
+  data: {
+    labels: days,
+    datasets: [
+      {
+        label: 'FW 2025',
+        data: [3200,3800,4100,3900,4800,5600,5200,4400,4700,5100,4900,5400,6100,5800],
+        borderColor: VIOLET, backgroundColor: 'rgba(123,111,232,0.1)',
+        borderWidth: 2.5, fill: true, tension: 0.4, pointRadius: 3,
+        pointBackgroundColor: VIOLET,
+      },
+      {
+        label: 'HW 2024',
+        data: [2800,3200,3600,3400,4200,4800,4600,3900,4100,4600,4400,4900,5500,5200],
+        borderColor: P_LIGHT, borderDash: [5, 3],
+        backgroundColor: 'transparent',
+        borderWidth: 1.5, tension: 0.4, pointRadius: 2,
+        pointBackgroundColor: P_LIGHT,
+      }
+    ]
+  },
+  options: {
+    ...chartDefaults,
+    plugins: {
+      ...chartDefaults.plugins,
+      legend: {
+        display: true,
+        labels: { color: '#4A4560', font: { size: 11, family: "'DM Sans'" }, boxWidth: 20, padding: 14 }
+      }
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { color: '#8B87A0', font: { size: 11 } } },
+      y: { grid: { color: 'rgba(123,111,232,0.07)' }, ticks: { color: '#8B87A0', font: { size: 11 } } }
+    }
+  }
+});
+
+// ── TOP PAGES BAR ────────────────────────────────────────────────────
+const _el_topPagesChart = document.getElementById('topPagesChart'); if (_el_topPagesChart) new Chart(_el_topPagesChart, {
+  type: 'bar',
+  data: {
+    labels: ['/damen/kleider', '/sale/sommer', '/schuhe/sneaker', '/herren/jacken', '/accessoires'],
+    datasets: [{
+      data: [8240, 6180, 4920, 3760, 2890],
+      backgroundColor: [VIOLET, V_LIGHT, PINK, P_LIGHT, NAVY],
+      borderRadius: 6, borderSkipped: false,
+    }]
+  },
+  options: {
+    ...chartDefaults,
+    indexAxis: 'y',
+    scales: {
+      x: { grid: { color: 'rgba(123,111,232,0.07)' }, ticks: { color: '#8B87A0', font: { size: 11 } } },
+      y: { grid: { display: false }, ticks: { color: '#4A4560', font: { size: 11 } } }
+    }
+  }
+});
+
+// ── REVENUE CHART ────────────────────────────────────────────────────
+const rEl = document.getElementById('revenueChart');
+const rCtx = rEl ? rEl.getContext('2d') : null;
+const rGrad = rCtx ? rCtx.createLinearGradient(0, 0, 0, 220) : null;
+if (rGrad) {
+rGrad.addColorStop(0, 'rgba(123,111,232,0.2)');
+rGrad.addColorStop(1, 'rgba(123,111,232,0.0)');
+
+if (rCtx) new Chart(rCtx, {
+  type: 'line',
+  data: {
+    labels: ['1.Feb','8.Feb','15.Feb','22.Feb','1.Mär','8.Mär','15.Mär','22.Mär','29.Mär'],
+    datasets: [
+      {
+        label: 'FW 2025',
+        data: [18400,21200,24800,22600,28400,31200,27800,33600,36400],
+        borderColor: VIOLET, backgroundColor: rGrad,
+        borderWidth: 2.5, fill: true, tension: 0.4, pointRadius: 3,
+        pointBackgroundColor: VIOLET,
+      },
+      {
+        label: 'FW 2024',
+        data: [16200,18800,21400,19800,24600,27400,24200,29800,31600],
+        borderColor: '#D1D5DB', backgroundColor: 'transparent',
+        borderWidth: 1.5, borderDash: [5,3], tension: 0.4, pointRadius: 2,
+      }
+    ]
+  },
+  options: {
+    ...chartDefaults,
+    plugins: {
+      ...chartDefaults.plugins,
+      legend: {
+        display: true,
+        labels: { color: '#4A4560', font: { size: 11, family: "'DM Sans'" }, boxWidth: 20, padding: 14 }
+      }
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { color: '#8B87A0', font: { size: 11 } } },
+      y: {
+        grid: { color: 'rgba(123,111,232,0.07)' },
+        ticks: {
+          color: '#8B87A0', font: { size: 11 },
+          callback: v => '€' + (v/1000).toFixed(0) + 'K'
+        }
+      }
+    }
+  }
+});
+} // end if (rGrad)
+
+// ── SEGMENT DONUT ────────────────────────────────────────────────────
+const _el_segmentChart = document.getElementById('segmentChart'); if (_el_segmentChart) new Chart(_el_segmentChart, {
+  type: 'doughnut',
+  data: {
+    labels: ['Bestandskunden', 'Neukunden', 'Reaktivierte', 'Abbrecher'],
+    datasets: [{
+      data: [47, 31, 14, 8],
+      backgroundColor: [VIOLET, PINK, NAVY, '#D1D5DB'],
+      borderWidth: 0, hoverOffset: 6,
+    }]
+  },
+  options: {
+    ...chartDefaults,
+    cutout: '65%',
+    plugins: { ...chartDefaults.plugins, legend: { display: false } }
+  }
+});
 </script>
 </body>
 </html>
