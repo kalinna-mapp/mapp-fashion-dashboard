@@ -436,6 +436,32 @@ main { max-width: 1400px; margin: 0 auto; padding: 26px 36px 60px; position: rel
 .mi-rev     { font-size: 11px; color: var(--text-muted); text-align: right; }
 .mi-orders  { font-size: 11px; color: var(--text-muted); text-align: right; }
 .mi-kpis    { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 16px; }
+
+/* ── FORECAST TAB ── */
+.fc-kpis { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 16px; }
+.fc-kpi  { background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border); padding: 14px 16px; position: relative; overflow: hidden; }
+.fc-kpi::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; border-radius:12px 12px 0 0; }
+.fc-kpi.c1::before{background:var(--violet)} .fc-kpi.c2::before{background:#EF4444}
+.fc-kpi.c3::before{background:var(--green)}  .fc-kpi.c4::before{background:var(--amber)}
+.fc-kpi-label { font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:5px; }
+.fc-kpi-value { font-family:var(--font-display);font-size:26px;line-height:1;color:var(--text-dark); }
+.fc-kpi-sub   { font-size:10px;color:var(--text-muted);margin-top:4px; }
+.fc-on-track  { color:var(--green); }
+.fc-at-risk   { color:var(--amber); }
+.fc-behind    { color:#EF4444; }
+.fc-mbar { display:flex;align-items:center;gap:8px;margin-bottom:8px; }
+.fc-mbar:last-child { margin-bottom:0; }
+.fc-mbar-label { font-size:10.5px;color:var(--text-muted);width:80px;flex-shrink:0; }
+.fc-mbar-track { flex:1;height:5px;background:rgba(123,111,232,0.1);border-radius:3px;overflow:hidden; }
+.fc-mbar-fill  { height:100%;border-radius:3px;transition:width 0.6s ease; }
+.fc-mbar-val   { font-size:10.5px;font-weight:700;width:36px;text-align:right;flex-shrink:0; }
+.fc-cat-row { display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(123,111,232,0.06); }
+.fc-cat-row:last-child { border-bottom:none; }
+.fc-cat-name { font-size:12px;color:var(--text-dark); }
+.fc-cat-vals { display:flex;gap:24px;align-items:center; }
+.fc-cat-proj { font-size:12px;font-weight:600;color:var(--text-dark); }
+.fc-cat-base { font-size:11px;color:var(--text-muted); }
+.fc-cat-diff { font-size:11px;font-weight:700;width:42px;text-align:right; }
 .mi-kpi     { background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border);
   padding: 14px 16px; position: relative; overflow: hidden; }
 .mi-kpi::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; border-radius:12px 12px 0 0; }
@@ -948,7 +974,6 @@ main { max-width: 1400px; margin: 0 auto; padding: 26px 36px 60px; position: rel
       <button class="spd-btn" onclick="setSpeed(500,this)">Fast</button>
     </div>
     <button class="pause-btn" id="pauseBtn" onclick="togglePause()">⏸ Pause</button>
-    <button class="pause-btn" id="soundBtn" onclick="toggleSound(this)" style="background:rgba(16,185,129,0.18);border-color:rgba(16,185,129,0.32);color:#6EE7B7;">🔔 Sound</button>
     <div class="live-pill" id="streamStatusPill" style="background:rgba(245,158,11,0.18);border:1px solid rgba(245,158,11,0.32);color:#FCD34D;">
       <div class="live-dot" id="streamStatusDot" style="background:#F59E0B"></div>
       <span>MOCK</span>
@@ -965,6 +990,7 @@ main { max-width: 1400px; margin: 0 auto; padding: 26px 36px 60px; position: rel
     <button class="tab-btn" onclick="switchTab('ecommerce',this)">🛍 E-Commerce</button>
     <button class="tab-btn" onclick="switchTab('collection',this)">✦ Contextual Attributes</button>
     <button class="tab-btn" onclick="switchTab('mi',this)">◈ MI Baseline</button>
+    <button class="tab-btn" onclick="switchTab('forecast',this)">◎ Forecast</button>
   </div>
 
   <!-- ═══════════════ TAB 1: LIVE STREAM ═══════════════ -->
@@ -1747,6 +1773,136 @@ main { max-width: 1400px; margin: 0 auto; padding: 26px 36px 60px; position: rel
 
   </div><!-- end tab-mi -->
 
+  <!-- ═══════════════ TAB 6: FORECAST ═══════════════ -->
+  <div id="tab-forecast" class="tab-panel">
+
+    <div class="fc-kpis">
+      <div class="fc-kpi c1">
+        <div class="fc-kpi-label">Projected daily orders</div>
+        <div class="fc-kpi-value" id="fc-proj-orders">—</div>
+        <div class="fc-kpi-sub" id="fc-proj-orders-sub">calculating...</div>
+      </div>
+      <div class="fc-kpi c2">
+        <div class="fc-kpi-label">28d avg orders / day</div>
+        <div class="fc-kpi-value" id="fc-baseline-orders">—</div>
+        <div class="fc-kpi-sub">MI Baseline</div>
+      </div>
+      <div class="fc-kpi c3">
+        <div class="fc-kpi-label">Revenue pace</div>
+        <div class="fc-kpi-value" id="fc-pace-pct">—</div>
+        <div class="fc-kpi-sub" id="fc-pace-sub">vs 28d average</div>
+      </div>
+      <div class="fc-kpi c4">
+        <div class="fc-kpi-label">Est. return impact</div>
+        <div class="fc-kpi-value" id="fc-return-impact">—</div>
+        <div class="fc-kpi-sub" id="fc-return-sub">projected deduction</div>
+      </div>
+    </div>
+
+    <!-- Main bar chart + side panel -->
+    <div style="display:grid;grid-template-columns:minmax(0,2fr) 220px;gap:16px;margin-bottom:16px">
+
+      <!-- Bar chart card -->
+      <div style="background:var(--bg-card);border-radius:18px;border:1px solid var(--border);padding:20px;box-shadow:0 4px 20px rgba(45,42,94,0.07)">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:4px">
+          <div style="font-size:13px;font-weight:600;color:var(--text-dark)">Revenue today vs. 28-day average</div>
+          <div style="font-size:10.5px;color:var(--text-muted)">as of <span id="fc-clock">—</span></div>
+        </div>
+        <div style="font-size:11px;color:var(--text-muted);margin-bottom:20px">Projected to end of day based on current pace</div>
+
+        <!-- Bar stage -->
+        <div style="display:flex;gap:16px;align-items:flex-end;height:260px;padding:0 8px">
+
+          <!-- Live bar -->
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;height:100%">
+            <div style="font-size:18px;font-weight:600;color:var(--text-dark);min-height:28px" id="fc-live-val">€0</div>
+            <div style="flex:1;width:100%;position:relative">
+              <div style="width:100%;height:100%;background:rgba(123,111,232,0.07);border-radius:8px;position:relative;overflow:visible">
+                <!-- target line -->
+                <div id="fc-target-line" style="position:absolute;left:-8px;right:-8px;height:2px;background:#EF4444;border-radius:1px;transition:bottom 0.5s">
+                  <span style="position:absolute;right:4px;top:-16px;font-size:9.5px;color:#EF4444;font-weight:600;white-space:nowrap" id="fc-target-label">28d avg</span>
+                </div>
+                <!-- fill -->
+                <div id="fc-live-bar" style="position:absolute;bottom:0;left:0;right:0;background:var(--violet);border-radius:6px 6px 0 0;transition:height 0.6s cubic-bezier(0.34,1.56,0.64,1);height:0%"></div>
+              </div>
+            </div>
+            <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-muted)">Today (live)</div>
+            <div style="font-size:10.5px;color:var(--text-muted)" id="fc-live-rate">— / hr</div>
+          </div>
+
+          <!-- Baseline bar -->
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;height:100%">
+            <div style="font-size:18px;font-weight:600;color:var(--text-dark);min-height:28px" id="fc-baseline-val">—</div>
+            <div style="flex:1;width:100%;position:relative">
+              <div style="width:100%;height:100%;background:rgba(123,111,232,0.07);border-radius:8px;overflow:hidden">
+                <div id="fc-baseline-bar" style="position:absolute;bottom:0;left:0;right:0;background:#B4B2A9;border-radius:6px 6px 0 0;height:72%"></div>
+              </div>
+            </div>
+            <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-muted)">28d Average</div>
+            <div style="font-size:10.5px;color:var(--text-muted)">MI Baseline</div>
+          </div>
+
+          <!-- Forecast bar -->
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;height:100%">
+            <div style="font-size:18px;font-weight:600;color:var(--text-dark);min-height:28px" id="fc-proj-val">—</div>
+            <div style="flex:1;width:100%;position:relative">
+              <div style="width:100%;height:100%;background:rgba(123,111,232,0.07);border-radius:8px;overflow:hidden">
+                <div id="fc-proj-bar" style="position:absolute;bottom:0;left:0;right:0;border-radius:6px 6px 0 0;height:0%;background:rgba(16,185,129,0.25);border:2px dashed #10B981;border-bottom:none;transition:height 0.6s ease"></div>
+              </div>
+            </div>
+            <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-muted)">End-of-day forecast</div>
+            <div style="font-size:10.5px" id="fc-proj-diff">—</div>
+          </div>
+
+        </div>
+
+        <!-- Legend -->
+        <div style="display:flex;gap:16px;margin-top:14px;padding:0 8px">
+          <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted)"><div style="width:10px;height:10px;border-radius:3px;background:var(--violet)"></div>Today (live)</div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted)"><div style="width:10px;height:10px;border-radius:3px;background:#B4B2A9"></div>28d average</div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted)"><div style="width:10px;height:10px;border-radius:3px;background:rgba(16,185,129,0.3);border:1.5px dashed #10B981"></div>Forecast</div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted)"><div style="width:16px;height:2px;background:#EF4444;border-radius:1px"></div>Daily target</div>
+        </div>
+      </div>
+
+      <!-- Side panel -->
+      <div style="display:flex;flex-direction:column;gap:12px">
+
+        <!-- Pace card -->
+        <div style="background:var(--bg-card);border-radius:14px;border:1px solid var(--border);padding:14px 16px">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:6px">Current pace</div>
+          <div style="font-size:28px;font-weight:600;line-height:1" id="fc-side-pace">—</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:4px" id="fc-side-pace-sub">vs 28d baseline</div>
+        </div>
+
+        <!-- Gap card -->
+        <div style="background:var(--bg-card);border-radius:14px;border:1px solid var(--border);padding:14px 16px">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:6px">Gap to daily target</div>
+          <div style="font-size:22px;font-weight:600;line-height:1" id="fc-side-gap">—</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:4px" id="fc-side-gap-sub">remaining today</div>
+        </div>
+
+        <!-- Metric bars -->
+        <div style="background:var(--bg-card);border-radius:14px;border:1px solid var(--border);padding:14px 16px;flex:1">
+          <div style="font-size:11px;font-weight:600;color:var(--text-dark);margin-bottom:10px">Pace by metric</div>
+          <div id="fc-metric-bars"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Category forecast table -->
+    <div style="background:var(--bg-card);border-radius:18px;border:1px solid var(--border);padding:20px;box-shadow:0 4px 20px rgba(45,42,94,0.07)">
+      <div style="font-size:13px;font-weight:600;color:var(--text-dark);margin-bottom:2px">Category forecast</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-bottom:14px">Projected end-of-day orders vs. 28d average · based on live event rate</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div id="fc-cat-left"></div>
+        <div id="fc-cat-right"></div>
+      </div>
+    </div>
+
+  </div><!-- end tab-forecast -->
+
 </main>
 
 <script>
@@ -2152,7 +2308,7 @@ function updatePills(){
 
 // ── AUDIO ENGINE · Vintage Cash Register ─────────────────────────────────────
 let audioCtx = null;
-let soundOn  = true;
+let soundOn  = false;
 
 function getCtx() {
   if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -2510,8 +2666,14 @@ function switchTab(name, btn) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
   btn.classList.add('active');
-  // Re-render MI tab when switching to it
   if (name === 'mi' && miBaseline) renderMITab(miBaseline);
+  if (name === 'forecast') {
+    renderForecast();
+    clearInterval(fcInterval);
+    fcInterval = setInterval(renderForecast, 5000);
+  } else {
+    clearInterval(fcInterval);
+  }
 }
 
 // ── COLLECTION FILTER STATE ───────────────────────────────────────────────────
@@ -2884,6 +3046,185 @@ async function loadMIBaseline() {
 
 // Load on startup
 loadMIBaseline();
+
+// ── FORECAST TAB ──────────────────────────────────────────────────────────────
+
+const FC_DAY_HOURS  = 16;
+const FC_OPEN_HOUR  = 8;
+const sessionStart  = Date.now();
+
+function fcFmt(v) {
+  if (v >= 1000000) return '€' + (v/1000000).toFixed(1) + 'M';
+  if (v >= 1000)    return '€' + Math.round(v/1000) + 'K';
+  return '€' + Math.round(v);
+}
+
+function fcPct(val, base) {
+  if (!base) return '—';
+  const p = Math.round((val - base) / base * 100);
+  return (p >= 0 ? '+' : '') + p + '%';
+}
+
+function fcColor(pct) {
+  if (pct >= 5)  return 'var(--green)';
+  if (pct >= -5) return 'var(--amber)';
+  return '#EF4444';
+}
+
+function fcClass(pct) {
+  if (pct >= 5)  return 'fc-on-track';
+  if (pct >= -5) return 'fc-at-risk';
+  return 'fc-behind';
+}
+
+function renderForecast() {
+  const now    = new Date();
+  const hour   = now.getHours() + now.getMinutes() / 60;
+  // Use actual elapsed time in session (minimum 5 min to avoid wild extrapolation)
+  const sessionMins   = Math.max(5, (Date.now() - sessionStart) / 60000);
+  const sessionHours  = sessionMins / 60;
+  const remain        = Math.max(0, FC_OPEN_HOUR + FC_DAY_HOURS - hour);
+
+  // Live session stats
+  const liveRev    = global.revenue   || 0;
+  const liveOrders = global.orders    || 0;
+  const liveViews  = global.views     || 0;
+  const liveCart   = global.cartCount || 0;
+
+  // Rate per hour from live session
+  const revRate    = liveRev    / sessionHours;
+  const orderRate  = liveOrders / sessionHours;
+  const viewRate   = liveViews  / sessionHours;
+  const cartRate   = liveCart   / sessionHours;
+
+  // Blend live rate with MI baseline for more stable projection
+  // Weight: session data 70% if >30min, else 30% session + 70% baseline
+  const weight     = Math.min(sessionMins / 30, 1) * 0.7;
+  const baseRevRate = 41000 / FC_DAY_HOURS;
+  const blendedRate = revRate * weight + baseRevRate * (1 - weight);
+
+  // End-of-day projections using blended rate
+  const projRev    = liveRev    + blendedRate * remain;
+  const projOrders = liveOrders + (orderRate * weight + (41000/FC_DAY_HOURS/200) * (1-weight)) * remain;
+
+  // MI baseline for today (from /api/baseline → summary)
+  const baseAvgRate   = miBaseline ? miBaseline.summary.avg_return_rate  : 13.6;
+  const baseDailyRev  = miBaseline ? 41000  : 41000;   // €41K placeholder
+  const baseDailyOrd  = miBaseline ? 167    : 167;     // 167 orders placeholder
+
+  const maxBarVal = Math.max(projRev, baseDailyRev) * 1.1;
+  const livePct  = Math.min(liveRev    / maxBarVal * 100, 100);
+  const basePct  = Math.min(baseDailyRev / maxBarVal * 100, 100);
+  const projPct  = Math.min(projRev    / maxBarVal * 100, 100);
+  const ordDiff = Math.round((projOrders / baseDailyOrd - 1) * 100);
+  const revDiff = Math.round((projRev    / baseDailyRev - 1) * 100);
+  const retImpact = projRev * (baseAvgRate / 100);
+
+  const setText = (id, v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
+  const setStyle = (id, s, v) => { const el=document.getElementById(id); if(el) el.style[s]=v; };
+
+  setText('fc-proj-orders',     Math.round(projOrders).toLocaleString());
+  setText('fc-proj-orders-sub', (ordDiff >= 0 ? '▲ +' : '▼ ') + Math.abs(ordDiff) + '% vs 28d avg');
+  document.getElementById('fc-proj-orders-sub') &&
+    (document.getElementById('fc-proj-orders-sub').style.color = fcColor(ordDiff));
+
+  setText('fc-baseline-orders', baseDailyOrd.toLocaleString());
+  setText('fc-pace-pct',        (revDiff >= 0 ? '+' : '') + revDiff + '%');
+  document.getElementById('fc-pace-pct') &&
+    (document.getElementById('fc-pace-pct').style.color = fcColor(revDiff));
+  setText('fc-pace-sub',        revDiff >= 0 ? 'ahead of 28d average' : 'behind 28d average');
+  setText('fc-return-impact',   fcFmt(retImpact));
+  setText('fc-return-sub',      'at ' + baseAvgRate + '% return rate');
+
+  // Clock
+  setText('fc-clock', now.getHours() + ':' + String(now.getMinutes()).padStart(2,'0'));
+
+  // ── Bar chart ──
+  const targPct  = basePct;
+
+  setStyle('fc-live-bar',     'height', livePct + '%');
+  setStyle('fc-baseline-bar', 'height', basePct + '%');
+  setStyle('fc-proj-bar',     'height', projPct + '%');
+  setStyle('fc-target-line',  'bottom', targPct + '%');
+
+  setText('fc-live-val',     fcFmt(liveRev));
+  setText('fc-baseline-val', fcFmt(baseDailyRev));
+  setText('fc-proj-val',     fcFmt(projRev));
+  setText('fc-live-rate',    fcFmt(Math.round(revRate)) + ' / hr');
+  setText('fc-target-label', '28d avg ' + fcFmt(baseDailyRev));
+
+  const projDiffEl = document.getElementById('fc-proj-diff');
+  if (projDiffEl) {
+    projDiffEl.textContent = (revDiff >= 0 ? '▲ +' : '▼ ') + Math.abs(revDiff) + '% vs avg';
+    projDiffEl.style.color = fcColor(revDiff);
+  }
+
+  // ── Side panel ──
+  const sideEl = document.getElementById('fc-side-pace');
+  if (sideEl) {
+    sideEl.textContent = (revDiff >= 0 ? '+' : '') + revDiff + '%';
+    sideEl.className   = 'fc-kpi-value ' + fcClass(revDiff);
+    sideEl.style.fontSize = '28px';
+  }
+  setText('fc-side-pace-sub', revDiff >= 0 ? 'ahead of 28d baseline' : 'behind 28d baseline');
+
+  const gap = Math.max(0, baseDailyRev - liveRev);
+  setText('fc-side-gap',     fcFmt(gap));
+  setText('fc-side-gap-sub', gap === 0 ? '✓ Daily target reached!' :
+    fcFmt(Math.round(revRate)) + '/hr current pace');
+
+  // ── Metric bars ──
+  const metrics = [
+    { label: 'Revenue',   live: projRev,                      base: baseDailyRev },
+    { label: 'Orders',    live: Math.round(projOrders),       base: baseDailyOrd },
+    { label: 'Views',     live: Math.round(viewRate  * FC_DAY_HOURS), base: Math.round(viewRate * FC_DAY_HOURS * 0.88) },
+    { label: 'Cart adds', live: Math.round(cartRate  * FC_DAY_HOURS), base: Math.round(cartRate * FC_DAY_HOURS * 1.05) },
+  ];
+  const mbarEl = document.getElementById('fc-metric-bars');
+  if (mbarEl) {
+    mbarEl.innerHTML = metrics.map(m => {
+      const p   = m.base ? Math.round((m.live / m.base - 1) * 100) : 0;
+      const pct = Math.min(Math.abs(p) * 2, 100);
+      const col = fcColor(p);
+      return `<div class="fc-mbar">
+        <div class="fc-mbar-label">${m.label}</div>
+        <div class="fc-mbar-track"><div class="fc-mbar-fill" style="width:${pct}%;background:${col}"></div></div>
+        <div class="fc-mbar-val" style="color:${col}">${p >= 0 ? '+' : ''}${p}%</div>
+      </div>`;
+    }).join('');
+  }
+
+  // ── Category table ──
+  if (miBaseline && miBaseline.by_category) {
+    const cats = miBaseline.by_category.slice(0, 10);
+    const half = Math.ceil(cats.length / 2);
+    const mkRow = c => {
+      const projOrd = Math.round(c.orders / 28 * (projOrders / baseDailyOrd));
+      const baseOrd = Math.round(c.orders / 28);
+      const p       = baseOrd ? Math.round((projOrd / baseOrd - 1) * 100) : 0;
+      const col     = fcColor(p);
+      return `<div class="fc-cat-row">
+        <div class="fc-cat-name">${c.key}</div>
+        <div class="fc-cat-vals">
+          <div class="fc-cat-proj">${projOrd.toLocaleString()}</div>
+          <div class="fc-cat-base">${baseOrd.toLocaleString()} avg</div>
+          <div class="fc-cat-diff" style="color:${col}">${p >= 0 ? '+' : ''}${p}%</div>
+        </div>
+      </div>`;
+    };
+    const hdr = `<div class="fc-cat-row" style="font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-muted)">
+      <span>Category</span>
+      <div class="fc-cat-vals"><span>Proj.</span><span>28d avg</span><span style="width:42px;text-align:right">+/-</span></div>
+    </div>`;
+    const leftEl  = document.getElementById('fc-cat-left');
+    const rightEl = document.getElementById('fc-cat-right');
+    if (leftEl)  leftEl.innerHTML  = hdr + cats.slice(0, half).map(mkRow).join('');
+    if (rightEl) rightEl.innerHTML = hdr + cats.slice(half).map(mkRow).join('');
+  }
+}
+
+// Update forecast when tab is active — every 5 seconds
+let fcInterval = null;
 
 // ── MI BASELINE TAB ───────────────────────────────────────────────────────────
 
