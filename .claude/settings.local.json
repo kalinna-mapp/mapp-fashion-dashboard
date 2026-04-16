@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C c:/Dev/Projekte/mapp-fashion-dashboard rm DASHBOARD.md)"
+    ]
+  }
+}
