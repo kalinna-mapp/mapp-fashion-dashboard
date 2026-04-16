@@ -10,77 +10,50 @@ import base64
 import json
 import time
 from typing import Optional
-from config import settings
+from config import settings, reports
 
-BASE_URL = "https://intelligence.eu.mapp.com/analytics/api"
+BASE_URL = settings.mapp_api_base_url
 
-# ── Report configuration (exakt aus MI kopiert, Element-IDs aus Report 1176) ──
-REPORT_CONFIG = {
-    "configuration": {
-        "id": 1176,
-        "title": "Export for Realtime Dashboard",
-        "description": "",
-        "elements": [
-            {
-                "id": 259656,
-                "type": "ANALYSIS",
-                "config": {
-                    "title": "Product SKUs",
-                    "columns": [
-                        {"name": "product", "scope": "OBJECT", "context": "ATOMIC", "variant": "NORMAL", "lowerLimit": 1, "upperLimit": 500},
-                        {"name": "products_viewed_qty", "columnPeriod": "ANALYSIS", "sortDirection": "DESCENDING", "sortIndex": 1, "scope": "OBJECT", "context": "ATOMIC", "variant": "NORMAL"},
-                        {"name": "products_purchased_qty", "columnPeriod": "ANALYSIS", "scope": "OBJECT", "context": "ATOMIC", "variant": "NORMAL"},
-                        {"name": "products_purchased_value", "columnPeriod": "ANALYSIS", "scope": "OBJECT", "context": "ATOMIC", "variant": "NORMAL"},
-                        {"name": "product_parameter_number_561_qty", "columnPeriod": "ANALYSIS", "scope": "OBJECT", "context": "ATOMIC"},
-                        {"name": "product_parameter_number_561_sum", "columnPeriod": "ANALYSIS", "scope": "OBJECT", "context": "ATOMIC"}
-                    ],
-                    "variant": "LIST"
-                }
+
+def build_report_config() -> dict:
+    """Build the MI report query config from mapp_reports.yaml (baseline section)."""
+    bl = reports["baseline"]
+    f  = bl["fields"]
+    el = bl["elements"]
+
+    def _cols(dim: str | None) -> list:
+        dim_col = [{"name": dim, "scope": "OBJECT", "context": "ATOMIC", "lowerLimit": 1, "upperLimit": 50}] if dim else [
+            {"name": "product", "scope": "OBJECT", "context": "ATOMIC", "variant": "NORMAL", "lowerLimit": 1, "upperLimit": 500}
+        ]
+        return dim_col + [
+            {"name": "products_viewed_qty",     "columnPeriod": "ANALYSIS", "sortDirection": "DESCENDING", "sortIndex": 1, "scope": "OBJECT", "context": "ATOMIC", "variant": "NORMAL"},
+            {"name": "products_purchased_qty",  "columnPeriod": "ANALYSIS", "scope": "OBJECT", "context": "ATOMIC", "variant": "NORMAL"},
+            {"name": "products_purchased_value","columnPeriod": "ANALYSIS", "scope": "OBJECT", "context": "ATOMIC", "variant": "NORMAL"},
+            {"name": f["return_qty"],           "columnPeriod": "ANALYSIS", "scope": "OBJECT", "context": "ATOMIC"},
+            {"name": f["return_sum"],           "columnPeriod": "ANALYSIS", "scope": "OBJECT", "context": "ATOMIC"},
+        ]
+
+    return {
+        "configuration": {
+            "id": bl["report_id"],
+            "title": "Export for Realtime Dashboard",
+            "description": "",
+            "elements": [
+                {"id": el["sku"],      "type": "ANALYSIS", "config": {"title": "Product SKUs",      "columns": _cols(None),               "variant": "LIST"}},
+                {"id": el["category"],"type": "ANALYSIS", "config": {"title": "Product Category",  "columns": _cols(f["category_dim"]),  "variant": "LIST"}},
+                {"id": el["occasion"],"type": "ANALYSIS", "config": {"title": "Product Context",   "columns": _cols(f["occasion_dim"]),  "variant": "LIST"}},
+            ],
+            "timeFilter": {
+                "name": "time_dynamic",
+                "connector": "AND",
+                "filterPredicate": "LIKE",
+                "value1": bl.get("time_filter", "last_28_days"),
+                "value2": "",
+                "context": "NONE",
+                "caseSensitive": False,
             },
-            {
-                "id": 259658,
-                "type": "ANALYSIS",
-                "config": {
-                    "title": "Product Category",
-                    "columns": [
-                        {"name": "product_category_text_2", "scope": "OBJECT", "context": "ATOMIC", "lowerLimit": 1, "upperLimit": 50},
-                        {"name": "products_viewed_qty", "columnPeriod": "ANALYSIS", "sortDirection": "DESCENDING", "sortIndex": 1, "scope": "OBJECT", "context": "ATOMIC", "variant": "NORMAL"},
-                        {"name": "products_purchased_qty", "columnPeriod": "ANALYSIS", "scope": "OBJECT", "context": "ATOMIC", "variant": "NORMAL"},
-                        {"name": "products_purchased_value", "columnPeriod": "ANALYSIS", "scope": "OBJECT", "context": "ATOMIC", "variant": "NORMAL"},
-                        {"name": "product_parameter_number_561_qty", "columnPeriod": "ANALYSIS", "scope": "OBJECT", "context": "ATOMIC"},
-                        {"name": "product_parameter_number_561_sum", "columnPeriod": "ANALYSIS", "scope": "OBJECT", "context": "ATOMIC"}
-                    ],
-                    "variant": "LIST"
-                }
-            },
-            {
-                "id": 259660,
-                "type": "ANALYSIS",
-                "config": {
-                    "title": "Product Context",
-                    "columns": [
-                        {"name": "product_category_text_12", "scope": "OBJECT", "context": "ATOMIC", "lowerLimit": 1, "upperLimit": 50},
-                        {"name": "products_viewed_qty", "columnPeriod": "ANALYSIS", "sortDirection": "DESCENDING", "sortIndex": 1, "scope": "OBJECT", "context": "ATOMIC", "variant": "NORMAL"},
-                        {"name": "products_purchased_qty", "columnPeriod": "ANALYSIS", "scope": "OBJECT", "context": "ATOMIC", "variant": "NORMAL"},
-                        {"name": "products_purchased_value", "columnPeriod": "ANALYSIS", "scope": "OBJECT", "context": "ATOMIC", "variant": "NORMAL"},
-                        {"name": "product_parameter_number_561_qty", "columnPeriod": "ANALYSIS", "scope": "OBJECT", "context": "ATOMIC"},
-                        {"name": "product_parameter_number_561_sum", "columnPeriod": "ANALYSIS", "scope": "OBJECT", "context": "ATOMIC"}
-                    ],
-                    "variant": "LIST"
-                }
-            }
-        ],
-        "timeFilter": {
-            "name": "time_dynamic",
-            "connector": "AND",
-            "filterPredicate": "LIKE",
-            "value1": "last_28_days",
-            "value2": "",
-            "context": "NONE",
-            "caseSensitive": False
         }
     }
-}
 
 # ── Token Manager ──────────────────────────────────────────────────────────────
 
@@ -101,10 +74,12 @@ class TokenManager:
         async with httpx.AsyncClient() as c:
             r = await c.post(
                 f"{BASE_URL}/oauth/token",
-                params={"grant_type": "client_credentials", "scope": "mapp.intelligence-api"},
-                headers={"Authorization": f"Basic {self._credentials()}", "Content-Type": "application/x-www-form-urlencoded"},
+                data={"grant_type": "client_credentials", "scope": "mapp.intelligence-api"},
+                headers={"Authorization": f"Basic {self._credentials()}"},
                 timeout=15,
             )
+            if not r.is_success:
+                print(f"[MI] Token error {r.status_code}: {r.text}")
             r.raise_for_status()
             data = r.json()
         self._token = data["access_token"]
@@ -186,7 +161,7 @@ async def fetch_baseline() -> dict:
         r = await c.post(
             f"{BASE_URL}/report-query",
             headers=headers,
-            content=json.dumps(REPORT_CONFIG),
+            content=json.dumps(build_report_config()),
             timeout=30,
         )
         r.raise_for_status()
@@ -196,20 +171,24 @@ async def fetch_baseline() -> dict:
 
     # Fetch each element's result in parallel
     async def fetch_element(state: dict) -> list:
-        result_url = state.get("resultUrl")
-        if not result_url:
-            # Poll if still running
+        calc_id    = state.get("calculationId", "")
+        result_url = f"{BASE_URL}/analysis-result/{calc_id}"
+        status     = state.get("status", "")
+
+        # Usually immediately DONE — only poll if not yet ready
+        if status not in ("DONE", "SUCCESS"):
             status_url = state.get("statusUrl", "")
             async with httpx.AsyncClient() as c:
                 for _ in range(15):
                     await asyncio.sleep(2)
                     rs = await c.get(status_url, headers=headers, timeout=15)
-                    s = rs.json()
-                    if s.get("status") == "SUCCESS":
-                        result_url = s.get("resultUrl", "")
+                    s  = rs.json()
+                    if s.get("status") in ("DONE", "SUCCESS"):
                         break
-        if not result_url:
-            return []
+                else:
+                    print(f"[MI] Element {calc_id} did not complete in time")
+                    return []
+
         async with httpx.AsyncClient() as c:
             rr = await c.get(result_url, headers=headers, timeout=30)
             rr.raise_for_status()

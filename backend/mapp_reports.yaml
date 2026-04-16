@@ -1,0 +1,26 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Mapp Intelligence Report Configuration
+# Defines all MI Analytics API reports used by the dashboard.
+# Report IDs and element IDs: MI → Reports → [report] → Share → API
+# Field names: MI → Reports → [report] → Column configuration
+#
+# This file is committed to version control — do NOT put credentials here.
+# Credentials belong in .env (MAPP_CLIENT_ID, MAPP_CLIENT_SECRET).
+# ─────────────────────────────────────────────────────────────────────────────
+
+baseline:
+  # Return rate baseline — used to enrich live events with return risk level.
+  # Report: "Export for Realtime Dashboard" (ID 1176)
+  report_id: 1176
+  elements:
+    sku: 259656        # Analysis element: Product SKUs
+    category: 259658   # Analysis element: Product Category
+    occasion: 259660   # Analysis element: Product Context (occasion)
+  fields:
+    # MI product parameter holding return quantity and value
+    return_qty: product_parameter_number_561_qty
+    return_sum: product_parameter_number_561_sum
+    # MI dimension fields for category and occasion breakdowns
+    category_dim: product_category_text_2
+    occasion_dim: product_category_text_12
+  time_filter: last_28_days
