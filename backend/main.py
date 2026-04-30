@@ -16,6 +16,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 
 from config import settings
+from routers.chat import router as chat_router
 from mock_data import (
     HISTORICAL_TRAFFIC, HISTORICAL_DEVICES, HISTORICAL_GEO,
     HISTORICAL_BROWSERS, HISTORICAL_TOP_PAGES,
@@ -31,6 +32,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(chat_router)
 
 # ── Event queue ────────────────────────────────────────────────────────────────
 event_queue: asyncio.Queue = asyncio.Queue()

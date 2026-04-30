@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git -C c:/Dev/Projekte/mapp-fashion-dashboard rm DASHBOARD.md)"
+      "Bash(git -C c:/Dev/Projekte/mapp-fashion-dashboard rm DASHBOARD.md)",
+      "Skill(claude-api)",
+      "Skill(claude-api:*)",
+      "mcp__atlassian__getConfluencePage"
     ]
   }
 }

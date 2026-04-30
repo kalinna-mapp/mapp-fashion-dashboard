@@ -4,6 +4,7 @@
 // Full specification: docs/PROMPT.md
 
 import Header              from './components/Header.jsx'
+import ChatDrawer          from './components/ChatDrawer.jsx'
 import GlobalKpiStrip      from './components/GlobalKpiStrip.jsx'
 import SegmentCards        from './components/SegmentCards.jsx'
 import FilterBar           from './components/FilterBar.jsx'
@@ -17,6 +18,7 @@ import EventLog            from './components/EventLog.jsx'
 export default function App() {
   return (
     <>
+      <ChatDrawer />
       <Header />
       <main style={{ maxWidth: 1400, margin: '0 auto', padding: '26px 36px 60px', position: 'relative', zIndex: 1 }}>
         <GlobalKpiStrip />

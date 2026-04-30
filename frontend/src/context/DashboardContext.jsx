@@ -68,6 +68,27 @@ function reducer(state, action) {
   }
 }
 
+export function getDashboardSnapshot(state) {
+  return {
+    liveKPIs: {
+      revenue:     state.revenue,
+      orders:      state.orders,
+      cartValue:   state.cartValue,
+      cartCount:   state.cartCount,
+      cartItems:   state.cartItems,
+      views:       state.views,
+      rateRevenue: state.rateRevenue,
+    },
+    segmentCounts:    state.segmentCounts    ?? {},
+    segmentFinance:   state.segFinance       ?? {},
+    categoryData:     state.catData          ?? {},
+    interactionCounts: state.interactionCounts ?? {},
+    activeSegments:   [...(state.activeSegments ?? [])],
+    recentEvents:     state.recentEvents?.slice(-20) ?? [],
+    mode:             state.mode,
+  }
+}
+
 export function DashboardProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState)
   const soundRef = useRef(state.soundOn)

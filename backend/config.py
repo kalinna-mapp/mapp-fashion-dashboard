@@ -23,6 +23,12 @@ class Settings(BaseSettings):
     mapp_account_id: str = ""
     mapp_api_base_url: str = "https://intelligence.eu.mapp.com/analytics/api"
 
+    # LiteLLM proxy
+    litellm_api_key: str = ""
+    litellm_base_url: str = "https://llm-proxy.labs.mapp.com"
+    app_name: str = "mapp-fashion-dashboard"
+    app_product: str = "fashion"
+
     # CORS
     cors_origins: str = "http://localhost:5173"
 
