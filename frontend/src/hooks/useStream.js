@@ -13,6 +13,7 @@ export function useStream(onMessage) {
   const active  = useRef(true)
 
   useEffect(() => {
+    active.current = true   // reset on each effect invocation (StrictMode mounts twice)
     function connect() {
       if (!active.current) return
       ws.current = new WebSocket(WS_URL)

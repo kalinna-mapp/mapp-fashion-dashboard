@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useContext } from 'react'
-import { DashboardContext, getDashboardSnapshot } from '../context/DashboardContext'
+import { DashboardContext } from '../context/dashboardContext.js'
+import { getDashboardSnapshot } from '../context/dashboardSnapshot.js'
 
 const STARTER_CHIPS = [
   'Was sind die wichtigsten Zahlen gerade?',
